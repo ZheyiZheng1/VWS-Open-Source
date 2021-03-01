@@ -37,6 +37,9 @@ Route::get('/surveyS', function(){
 Route::get('/dashboard/surveys/appendices/surveyAppendixQ', function(){
     return view('/dashboard/surveys/appendices/surveyAppendixQ');
 })->name('surveyAppendixQ');
+Route::get('/dashboard/surveys/appendices/surveyAppendixT', function(){
+    return view('/dashboard/surveys/appendices/surveyAppendixT');
+})->name('surveyAppendixT');
 
 Route::get('/dashboard/sampleSurvey', [SurveyController::class, 'index'])->name('SampleSurveyindex');
 Route::post('/dashboard/sampleSurvey', [SurveyController::class, 'store'])->name('SampleSurveystore');
