@@ -3,14 +3,9 @@
 namespace App\Http\Controllers\Surveys;
 
 use App\Models\AppendixO;
-use App\Models\DataToPopulateSurvey;
-use App\Models\AvailableSurveys;
-use App\Models\SurveyUserList;
-use App\Models\SurveyList;
-use App\Models\Questions;
-use App\Models\Answers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -22,10 +17,21 @@ class SurveyController extends Controller
         $this->middleware(['auth']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard/sampleSurvey');
+
+        $SurveyRetriever = new SurveyRetriever($request['SurveyList']);
+        $retrievedSurveyInfo = $SurveyRetriever->displaySurvey();
+
+        for ($idx = 0; $idx < count($retrievedSurveyInfo); $idx++) {
+            // dd($retrievedSurveyInfo[$idx]);
+            $questions[$idx] = $retrievedSurveyInfo[$idx]->QuestionDescription;
+        }
+
+
+        return view('participantPortal/appendixS', ['questions' => $questions]);
     }
+
 
     public function store(Request $request)
     {
@@ -39,7 +45,7 @@ class SurveyController extends Controller
             'chronic' => 'required|max:255'
         ]);
 
-         AppendixO::create([
+        AppendixO::create([
             'age' => $request->inputAge,
             'gender' => $request->gender,
             'height' => $request->inputHeight,
@@ -51,33 +57,48 @@ class SurveyController extends Controller
 
         return redirect()->route('dashboard');
     }
-    public function researchSurvey()
+    public function researchSurvey(Request $request)
     {
-        return view("dashboard.researchSurvey");
+        $SurveyRetriever = new SurveyRetriever(1);
+        $retrievedSurveyInfo = $SurveyRetriever->displaySurveyList();
+        return view("dashboard.researchSurvey", ['SurveysAvailable' => $retrievedSurveyInfo]);
+    }
+
+    public function availableSurveys(Request $request)
+    {
+
+        //List of all possible surveys
+        $SurveyRetriever = new SurveyRetriever($request['SurveyList']);
+        $retrievedSurveyInfo = $SurveyRetriever->displaySurveyList();
+
+        //TODO: Get the list of surveys completed for this user, something like:
+        // $SurveyRetriever = new SurveyRetriever::withUser(auth::user()->id);
+        // $completedSurveys = $SurveyRetriever->displaySurveyComplete();
+        // Loop through to determine the surveys they haven't done, and save that in $incompleteSurveys
+        // and produce both on the page.
+
+        return view('participantPortal/availableSurveys', ['SurveysAvailable' => $retrievedSurveyInfo]);
     }
 
     public function showDistributeSurvey() {
-        return view('dashboard/distributeSurvey');
+        return view('dashboard.distributeSurvey');
     }
 
     public function DistributeSurveyStore(Request $request) {
 
-        $request = $this->validateSurveyStore($request);
+        //Validate the data
+        $this->validateSurveyStore($request);
 
-        $addAvailableSurveys = $this->addAvailableSurveys($request);
+        $DistributionSurvey = new DistributeSurvey($request);
 
-        $addPopulateSurveyRows = $this->addPopulateToDataSurveys($request, $addAvailableSurveys);
-
-        $addSurveyUserList = $this->addSurveyUserList($addAvailableSurveys, $addPopulateSurveyRows);
-
-        $this->populateParticipantsWithSurveysToFillOut($request, $addAvailableSurveys, $addPopulateSurveyRows, $addSurveyUserList);
+        //Create the DistributionList for the survey
+        $DistributionSurvey->create();
 
         return redirect()->route('dashboard');
     }
 
-    //TODO: Should be its own class from validateSurveyStore -> $addSurveyUserList
     private function validateSurveyStore($request) {
-
+        //TODO: add more questions (they should go up to 9 for current default values)
         $this->validate($request, [
             'surveyName' => 'required|max:255',
             'deliveryfrequency' => 'required|max:255',
@@ -100,98 +121,6 @@ class SurveyController extends Controller
             'questionFiveLikert' => 'required|max:255'
         ]);
 
-        return $request;
+        return true;
     }
-
-    private function addAvailableSurveys($request) {
-
-        $addAvailableSurveys = AvailableSurveys::create([
-            'updated_at' => date('Y-m-d H:i:s') . '',
-            'SurveyName' => $request->surveyName,
-            'DeliveryFreq' => $request->deliveryfrequency,
-            'ProgramStartDate' => $request->programstartdate
-        ]);
-
-        return $addAvailableSurveys;
-    }
-
-    private function addPopulateToDataSurveys($request, $addAvailableSurveys) {
-
-        $questionDescriptions = [$request->questionOne, $request->questionTwo, $request->questionThree,
-            $request->questionFour, $request->questionFive];
-
-        $answerDescriptions = [$request->questionOneLikert, $request->questionTwoLikert, $request->questionThreeLikert,
-            $request->questionFourLikert, $request->questionFiveLikert];
-
-        for ($i = 0; $i < 5; $i++) {
-            $populateSurveyRows[$i] = DataToPopulateSurvey::create([
-                'updated_at' => $addAvailableSurveys->updated_at,
-                'QuestionNum' => $i + 1,
-                'QuestionDescription' => $questionDescriptions[$i],
-                'AnswerNum' => 1,
-                'AnswerDescription' => 'Likert ' . $answerDescriptions[$i],
-                'survey_id' => $addAvailableSurveys->id
-            ]);
-        }
-
-        return $populateSurveyRows;
-    }
-
-    private function addSurveyUserList($addAvailableSurveys, $populateSurveyRows) {
-
-        $addPopulateNewSurvey = SurveyUserList::create([
-            'updated_at' => date('Y-m-d H:i:s') . '',
-            'isCompleted' => false,
-            'user_id' => Auth::id(),
-            'survey_id' => $addAvailableSurveys->id,
-            'ProgramStartDate' => $addAvailableSurveys->ProgramStartDate
-        ]);
-
-        return $addPopulateNewSurvey;
-
-    }
-
-    // TODO: Needs to be a seperate Class
-    private function populateParticipantsWithSurveysToFillOut($request, $addAvailableSurveys, $addPopulateSurveyRows, $addSurveyUserList) {
-
-        $addSurveyList = SurveyList::create([
-            'SurveyName' => $request->surveyName,
-            'created_at' => $addAvailableSurveys->created_at,
-            'DeliveryDate' => $request->programstartdate, // FIXME: This only works for the first program, should be calculated
-        ]);
-
-        $participants = [$request->participantOne,
-            $request->participantTwo,
-            $request->participantThree,
-            $request->participantFour,
-            $request->participantFive
-        ];
-
-        //Two loops need to be refactored
-        foreach ($addPopulateSurveyRows as $surveyRows) {
-            $this->populateQuestionAnswersWithParticipants($participants, $addAvailableSurveys, $surveyRows, $addSurveyList);
-        }
-
-    }
-
-    private function populateQuestionAnswersWithParticipants($participants, $addAvailableSurveys, $surveyRows, $addSurveyList) {
-
-        $addQuestions = Questions::create([
-            'updated_at' => $addAvailableSurveys->updated_at,
-            'Description' => $surveyRows->QuestionDescription,
-            'isAnsweredRepeatedly' => false,
-            'survey_lists_id' => $addSurveyList->id
-        ]);
-
-        foreach ($participants as $participant) {
-            //FIXME: Participant User ID is hardcoded to 1, and it should be dynamic
-            $addAnswers = Answers::create([
-                'updated_at' => $addAvailableSurveys->updated_at,
-                'answerValue' => 'default',
-                'question_id' => $addQuestions->id,
-                'participant_user_id' => 1
-            ]);
-        }
-    }
-
 }

@@ -26,32 +26,31 @@
         <section class="right-panel" >
             <form id='surveyForm' action="userProfilePage" method="post">
             @csrf
-            <inout type="hidden" name="userId" value="{{$data['id']}}">
+            <input type="hidden" name="userId" placeholder="{{$data['id']}}">
             <label for="surveyQuestion" class="form-label">First Name</label>
             <!--read user information from controller and use those as a placeholder-->
-            <!--Need update migration (users)-->
-            <input type="text" class="form-control" id="questionOne" value="{{$data['firstName']}}" aria-describedby="questionOne">
+            <input type="text" class="form-control" id="firstName" placeholder="{{$data['firstName']}}" aria-describedby="questionOne">
 
             <label for="surveyQuestion" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="questionTwo" value="{{$data['lastName']}}" aria-describedby="questionTwo">
+            <input type="text" class="form-control" id="lastName" placeholder="{{$data['lastName']}}" aria-describedby="questionTwo">
 
             <label for="surveyQuestion" class="form-label">Phone Number</label>
-            <input type="tel" class="form-control" id="questionThree" value="{{$data['phone']}}" aria-describedby="questionThree">
+            <input type="tel" class="form-control" id="phone" placeholder="{{$data['phone']}}" aria-describedby="questionThree">
 
             <label for="surveyQuestion" class="form-label">Email Address</label>
-            <input type="email" class="form-control" id="questionFour" value="{{$data['email']}}" aria-describedby="questionFour">
+            <input type="email" class="form-control" id="email" placeholder="{{$data['email']}}" aria-describedby="questionFour">
 
             <label for="surveyQuestion" class="form-label">Address</label>
-            <input type="text" class="form-control" id="questionFive" value="{{$data['address']}}" aria-describedby="questionFive">
+            <input type="text" class="form-control" id="address" placeholder="{{$data['address']}}" aria-describedby="questionFive">
 
             <label for="surveyQuestion" class="form-label">City</label>
-            <input type="text" class="form-control" id="questionSix" value="{{$data['city']}}" aria-describedby="questionSix">
+            <input type="text" class="form-control" id="city" placeholder="{{$data['city']}}" aria-describedby="questionSix">
 
             <label for="surveyQuestion" class="form-label">Zip Code</label>
-            <input type="text" class="form-control" id="questionSeven" value="{{$data['zip']}}" aria-describedby="questionSeven">
+            <input type="text" class="form-control" id="zip" placeholder="{{$data['zip']}}" aria-describedby="questionSeven">
 
             <label for="surveyQuestion" class="form-label">Country</label>
-            <input type="text" class="form-control" id="questionEight" value="{{$data['country']}}" aria-describedby="questionEight">
+            <input type="text" class="form-control" id="country" placeholder="{{$data['country']}}" aria-describedby="questionEight">
 
             <button type="submit" class="btn btn-primary" style="width: 150px;">Save</button>
             </form>

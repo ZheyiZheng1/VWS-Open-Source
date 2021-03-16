@@ -19,22 +19,24 @@
 			<!--login and register buttom here, change link when these pages done-->
         </div>
 
-            @auth
+            @if (Route::has('login'))
+                @auth
                     <form action="{{ route('logout') }}" method="post" class="p-3 inline">
                     @csrf
                         <button type="submit" class="btn btn-primary mb-3">Logout</button>
                     </form>
-            @else
-                <div id="sign-in-or-register">
-                    <div id="login">
-                        @section('login')
-                            @include('auth.login')
-                        @show
+                @endauth
+                  @else
+                    <div id="sign-in-or-register">
+                        <div id="login">
+                            @section('login')
+                                @include('auth.login')
+                            @show
+                        </div>
                     </div>
-                </div>
 
 
-            @endauth
+            @endif
 
 
     </main>

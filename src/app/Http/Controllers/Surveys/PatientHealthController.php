@@ -14,6 +14,6 @@ class PatientHealthController extends Controller
 
     public function index()
     {
-        return view('dashboard/surveyHealth');
+        return view('participantPortal/surveys/surveyHealth');
     }
 }

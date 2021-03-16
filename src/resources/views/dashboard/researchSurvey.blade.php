@@ -37,70 +37,17 @@
                 </tr>
             </thead>
             <tbody>
+
+            @foreach($SurveysAvailable as $Survey)
                 <tr>
                      <th scope="row">1</th>
-                     <td>Appendix O</td>
+                     <td>{{ $Survey['SurveyName'] }}</td>
                      <td>0</td>
                      <td>0%</td>
-                     <td>06-03-2021</td>
+                     <td>{{ $Survey['DeliveryDate'] }}</td>
                      <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
                 </tr>
-                <tr>
-                     <th scope="row">2</th>
-                     <td>Appendix Q</td>
-                     <td>0</td>
-                     <td>0%</td>
-                     <td>06-03-2021</td>
-                     <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
-                </tr>
-                <tr>
-                     <th scope="row">3</th>
-                     <td>Appendix R</td>
-                     <td>0</td>
-                     <td>0%</td>
-                     <td>06-03-2021</td>
-                     <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
-                </tr>
-                <tr>
-                     <th scope="row">4</th>
-                     <td>Appendix S</td>
-                     <td>0</td>
-                     <td>0%</td>
-                     <td>06-03-2021</td>
-                     <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
-                </tr>
-                <tr>
-                     <th scope="row">5</th>
-                     <td>Appendix T</td>
-                     <td>0</td>
-                     <td>0%</td>
-                     <td>06-03-2021</td>
-                     <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
-                </tr>
-                <tr>
-                     <th scope="row">6</th>
-                     <td>Social Eating</td>
-                     <td>0</td>
-                     <td>0%</td>
-                     <td>06-03-2021</td>
-                     <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
-                </tr>
-                <tr>
-                     <th scope="row">7</th>
-                     <td>Social Workout</td>
-                     <td>0</td>
-                     <td>0%</td>
-                     <td>06-03-2021</td>
-                     <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
-                </tr>
-                <tr>
-                     <th scope="row">8</th>
-                     <td>Health Questionnaire</td>
-                     <td>0</td>
-                     <td>0%</td>
-                     <td>06-03-2021</td>
-                     <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
-                </tr>
+            @endforeach
             </tbody>
         </table>
         </section>

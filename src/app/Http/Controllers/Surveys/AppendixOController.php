@@ -32,7 +32,6 @@ class AppendixOController extends Controller
             'chronic' => 'required|max:255'
         ]);
 
-
         $name = Auth::user()->name;
 
         $request->user()->appendixO()->create([ //chains the users post to a user

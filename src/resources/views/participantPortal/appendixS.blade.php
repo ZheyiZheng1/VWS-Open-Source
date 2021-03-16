@@ -11,20 +11,20 @@
 	<link rel="stylesheet" href="/css/dashboard/surveyrightbar.css" />
 
 	<script src="https://kit.fontawesome.com/555936ed9c.js" crossorigin="anonymous"></script>
-    <title>Patient Health Questionnaire</title>
+    <title>Appendix S Survey</title>
 
 </head>
 
 <body>
     <div class="main">
         @section('leftsidebar')
-            @include('dashboard.leftsidebar')
+            @include('participantPortal.leftsidebar')
         @show
 
         <section class="right-panel" >
-            <form id='surveyForm' action="{{ route('PatientHealth') }}" method="post">
-                @section('surveyPatientHealth')
-                    @include('dashboard.surveys.appendices.surveyPatientHealth')
+            <form id='surveyForm' action="{{ route('AppendixS') }}" method="post">
+                @section('surveyAppendixS')
+                    @include('participantPortal.surveys.appendices.surveyAppendixS')
                 @show
             <button type="submit" class="btn btn-primary" style="width: 150px;">Submit</button>
             </form>

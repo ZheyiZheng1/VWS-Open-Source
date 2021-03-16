@@ -18,23 +18,37 @@
 <body>
     <div class="main">
         @section('leftsidebar')
-            @include('dashboard.leftsidebar')
+            @include('participantPortal.leftsidebar')
         @show
 
         <section class="right-panel" >
         <h1>Good Morning</h1>
         <br>
         <p>Here are a list of Surveys available</p>
-        
+
         <div class="complete">
             <h2>Completed Surveys</h2>
+            <div class="completeRow">
+
+            </div>
         </div>
 
         <div class="incomplete">
             <h2>Not Completed Surveys</h2>
+            @foreach($SurveysAvailable as $Survey)
+            <div class="incompleteRow">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $Survey['SurveyName'] }}</h5>
+                            <p class="card-text">Click the button below to start the Appendix O Survey</p>
+                            <a href="{{ route('RetrieveSurvey', ['SurveyList' => $Survey['id']]) }}" class="btn btn-primary">Start Survey</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
         </div>
-
-
         </section>
     </div>
 </body>

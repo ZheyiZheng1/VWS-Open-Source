@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\models\User;
 
 class LoginController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['guest']);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware(['guest']);
+    // }
 
     public function index()
     {
@@ -65,5 +66,28 @@ class LoginController extends Controller
             return back()->with('status', 'You are not an administrator');
         }
 
+    }
+    
+    //Next two function is for user profile page.
+    public function showProfileData($id){
+        //take data from database and pass to user profile page by using user id.
+        $data = User::find($id);
+        return view('userProfilePage',['data'=>$data]);
+    }
+
+    public function updateProfile(Request $req) {
+        //take data that upload from user and update to database.
+        $data = User::find($req->id);
+        $data = User::find($req->id);
+        $data->firstName=$req->firstName;
+        $data->lastName=$req->lastName;
+        $data->phone=$req->phone;
+        $data->email=$req->email;
+        $data->address=$req->address;
+        $data->city=$req->city;
+        $data->zip=$req->zip;
+        $data->country=$req->country;
+        $data->save();
+        return redirect('userProfilePage');
     }
 }

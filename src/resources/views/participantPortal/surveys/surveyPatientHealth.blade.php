@@ -81,7 +81,7 @@
                      </div>
  			</div>
              <div class="mb-3 question" id='question1'>
- 				<label for="customRange1" class="form-label"> 9) Thoughts that you would be better off dead or of hurting yourself in some way</label>
+ 				<label for="customRange1" class="form-label">9) Thoughts that you would be better off dead or of hurting yourself in some way</label>
                  <input type="range" class="form-range" min="0" max="3" step="1" id="customRange1" onchange="updateQuestion(8)">
                     <div class="inline" style="display: flex;">
                         <label for="customRange1Output" class="output-label">Current Value: </label>
