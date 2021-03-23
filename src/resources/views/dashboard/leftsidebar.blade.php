@@ -5,7 +5,7 @@
         <ul class="list-group">
             <li class="list-group-item active" aria-current="true"><a href="{{route('dashboard')}}">Dashboard</a></li>
             <li class="list-group-item"><a>Wellness Activity</a></li>
-            <li class="list-group-item"><a href="{{route('researchSurvey')}}">Survey</a></li>
+            <li class="list-group-item"><a href ="SurveyNav">Survey</a></li>
             <li class="list-group-item"><a>Forums</a></li>
             <li class="list-group-item"><a>Messages</a></li>
             @auth

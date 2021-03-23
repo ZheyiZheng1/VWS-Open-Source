@@ -33,8 +33,4 @@ class GeneralWebsiteController extends Controller
         return view('aboutpage');
     }
 
-    public function dashboard() {
-        return view('dashboard.index');
-    }
-
 }

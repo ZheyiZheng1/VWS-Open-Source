@@ -10,7 +10,7 @@
 					<p>Over the last two weeks, how often have you been bothered by the following problems?</p>
 
 					<div class="mb-3" id='surveyQuestion'>
-						<label for="surveyQuestion" class="form-label">Feeling nervous, anxious, or on edge?</label>
+						<label for="surveyQuestion" class="form-label">{{ $questions[0] }}</label>
 						<!-- this comes from https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="question" id="answer1" checked>
@@ -39,7 +39,7 @@
 					</div>
 
 					<div class="mb-3" id='surveyQuestion'>
-						<label for="surveyQuestion" class="form-label">Not being able to stop or control worrying?</label>
+						<label for="surveyQuestion" class="form-label">{{ $questions[1] }}</label>
 						<!-- this comes from https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="question2" id="q2answer1" checked>
@@ -68,7 +68,7 @@
 					</div>
 
 					<div class="mb-3" id='surveyQuestion'>
-						<label for="surveyQuestion" class="form-label">Worrying too much about different things?</label>
+						<label for="surveyQuestion" class="form-label">{{ $questions[2] }}</label>
 						<!-- this comes from https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="question3" id="q3answer1" checked>
@@ -97,7 +97,7 @@
 					</div>
 
 					<div class="mb-3" id='surveyQuestion'>
-						<label for="surveyQuestion" class="form-label">Trouble relaxing?</label>
+						<label for="surveyQuestion" class="form-label">{{ $questions[3] }}</label>
 						<!-- this comes from https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="question4" id="q4answer1" checked>
@@ -126,7 +126,7 @@
 					</div>
 
 					<div class="mb-3" id='surveyQuestion'>
-						<label for="surveyQuestion" class="form-label">Being so restless that it is hard to sit still?</label>
+						<label for="surveyQuestion" class="form-label">{{ $questions[4] }}</label>
 						<!-- this comes from https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="question5" id="q5answer1" checked>
@@ -155,7 +155,7 @@
 					</div>
 
 					<div class="mb-3" id='surveyQuestion'>
-						<label for="surveyQuestion" class="form-label">Becoming easily annoyed or irritable?</label>
+						<label for="surveyQuestion" class="form-label">{{ $questions[5] }}</label>
 						<!-- this comes from https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="question6" id="q6answer1" checked>
@@ -184,7 +184,7 @@
 					</div>
 
 					<div class="mb-3" id='surveyQuestion'>
-						<label for="surveyQuestion" class="form-label">Feeling afraid, as if something awful might happen?</label>
+						<label for="surveyQuestion" class="form-label">{{ $questions[6] }}</label>
 						<!-- this comes from https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="question7" id="q7answer1" checked>
@@ -213,7 +213,7 @@
 					</div>
 
 					<div class="mb-3" id='surveyQuestion'>
-						<label for="surveyQuestion" class="form-label">If you checked any problems, how difficult have they made it for you to do your work, take care of things at home, or get along with other people?</label>
+						<label for="surveyQuestion" class="form-label">{{ $questions[7] }}</label>
 						<!-- this comes from https://getbootstrap.com/docs/5.0/forms/checks-radios/ -->
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="question8" id="q8answer1" checked>

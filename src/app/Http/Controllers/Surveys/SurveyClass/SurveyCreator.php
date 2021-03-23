@@ -57,10 +57,11 @@ class SurveyCreator
         $this->AvailableSurveysObject->create($modelAvailableSurveys);
 
         $authId = Auth::id();
-        $this->SurveyUserListObject = new SurveyUserListObject($authId, $this->AvailableSurveysObject->getId(), $this->programStartDate);
-        $modelSurveyUserList = new SurveyUserList();
-        $this->SurveyUserListObject->create($modelSurveyUserList);
-
+        foreach ($this->participants as $participant) {
+            $this->SurveyUserListObject = SurveyUserListObject::withAuthIdAvailableSurveysIdProgramStartDate($authId, $this->AvailableSurveysObject->getId(), $this->programStartDate);
+            $modelSurveyUserList = new SurveyUserList();
+            $this->SurveyUserListObject->create($modelSurveyUserList, $participant);
+        }
         for ($i = 0; $i < 9; $i++) {
             $this->DataToPopulateSurveyDTO[$i] = DataToPopulateSurveysObject::withQuestionAnswer($i, $this->questionDescriptions[$i], $this->answerDescriptions[$i]);
             $this->DataToPopulateSurveyDTO[$i]->create($this->AvailableSurveysObject, $modelDataToPopulateSurvey);

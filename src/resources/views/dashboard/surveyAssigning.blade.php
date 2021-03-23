@@ -58,11 +58,9 @@
             <div class="input-group mb-3">
                 <select class="form-select" id="inputGroupSelect01">
                     <option selected>Select Participant</option>
-                    <option value="1">User 1</option>
-                    <option value="2">User 2</option>
-                    <option value="3">User 3</option>
-                    <option value="4">User 4</option>
-                    <option value="5">User 5</option>
+                    @foreach ($participants as $participant)
+                        <option value="{{$participant['id']}}">{{$participant["name"]}}</option>
+                    @endforeach
                 </select>
             </div>
             <button type="button" class="btn btn-success">Add Participant</button>

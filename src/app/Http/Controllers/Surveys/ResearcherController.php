@@ -2,43 +2,48 @@
 
 namespace App\Http\Controllers\Surveys;
 
-use App\Models\Survey;
-
 use App\Models\AppendixO;
-use Illuminate\Http\Request;
+use App\Models\ParticipantUser;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
 use App\Http\Controllers\Surveys\SurveyBuilder\DistributeSurvey;
 
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
-use App\Models\SurveyList;
+use Illuminate\Http\Request;
+use Bouncer;
 
-class SurveyController extends Controller
+class ResearcherController extends Controller
 {
     public function __construct()
     {
         $this->middleware(['auth']);
     }
 
-    public function index(Request $request)
-    {
-
-        $SurveyRetriever = new SurveyRetriever($request['SurveyList']);
-        $retrievedSurveyInfo = $SurveyRetriever->displaySurvey();
-
-        for ($idx = 0; $idx < count($retrievedSurveyInfo); $idx++) {
-            // dd($retrievedSurveyInfo[$idx]);
-            $questions[$idx] = $retrievedSurveyInfo[$idx]->QuestionDescription;
+    public function checkUserPermissions($isAdmin, $isParticipant) {
+        //This if statement ultimately shouldn't exist as-is
+        if ($isAdmin) {
+            return 'admin';
+        } else if ($isParticipant) {
+            return 'participant';
+        } else {
+            return 'superadmin';
         }
-
-
-        return view('participantPortal/appendixS', ['questions' => $questions]);
     }
+    public function dashboard() {
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
 
+        return view('dashboard.index');
+    }
 
     public function store(Request $request)
     {
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
+
         $this->validate($request, [
             'inputAge' => 'required|max:255',
             'gender' => 'required|in:male,female',
@@ -63,6 +68,10 @@ class SurveyController extends Controller
     }
     public function researchSurvey(Request $request)
     {
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
+
         $SurveyRetriever = new SurveyRetriever(1);
         $retrievedSurveyInfo = $SurveyRetriever->displaySurveyList();
         return view("dashboard.researchSurvey", ['SurveysAvailable' => $retrievedSurveyInfo]);
@@ -70,25 +79,29 @@ class SurveyController extends Controller
 
     public function availableSurveys(Request $request)
     {
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
 
-        //List of all possible surveys
-        $SurveyRetriever = new SurveyRetriever($request['SurveyList']);
-        $retrievedSurveyInfo = $SurveyRetriever->displaySurveyList();
+        $SurveyRetriever = SurveyRetriever::withEmptyConstructor();
+        $completedSurveys = $SurveyRetriever->displaySurveyUserList();
 
-        //TODO: Get the list of surveys not completed for this user, something like:
-        // $SurveyRetriever = new SurveyRetriever::withUser(auth::user()->id);
-        // $completedSurveys = $SurveyRetriever->displaySurveyComplete();
-        // Loop through to determine the surveys they haven't done, and save that in $incompleteSurveys
-        // and produce both on the page.
-
-        return view('participantPortal/availableSurveys', ['SurveysAvailable' => $retrievedSurveyInfo]);
+        return view('participantPortal/availableSurveys', ['SurveysAvailable' => $completedSurveys]);
     }
 
     public function showDistributeSurvey() {
-        return view('dashboard.distributeSurvey');
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
+        $participants = ParticipantUser::all();
+        return view('dashboard.distributeSurvey', ["participants"=>$participants]);
     }
 
     public function DistributeSurveyStore(Request $request) {
+
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
 
         //Validate the data
         $this->validateSurveyStore($request);
@@ -100,6 +113,18 @@ class SurveyController extends Controller
 
         return redirect()->route('dashboard');
     }
+
+    public function surveyAssigning(Request $request)
+    {
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
+        $participants = ParticipantUser::all();
+
+        return view("dashboard.surveyAssigning",["participants"=>$participants]);
+    }
+
+
 
     private function validateSurveyStore($request) {
         //TODO: add more questions (they should go up to 9 for current default values)
@@ -128,30 +153,5 @@ class SurveyController extends Controller
         return true;
     }
 
-    public function createSurvey()
-    {
-        return view('survey.createSurvey');
-    }
-
-    public function surveyStore(Request $request)
-    {
-        $data= request()->validate([
-            'surveyName'=> 'required',
-            'programdate'=> 'required|date'
-        ]);
-            //dd($data);
-
-        $survey= SurveyList::create([
-            'SurveyName' => $data['surveyName'],
-            'DeliveryDate' => $data['programdate'],
-        ]);
-
-        return redirect('/surveys/'.$survey->id);
-    }
-
-    public function show(Survey $survey)
-    {
-        return view('survey.show',compact('survey'));
-    }
 
 }

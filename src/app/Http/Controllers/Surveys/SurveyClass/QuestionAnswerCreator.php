@@ -13,15 +13,11 @@ use App\Models\Questions;
 use App\Models\Answers;
 use App\Models\SurveyList;
 
-interface ICreateSurveyItems {
-    public function createAggregate();
-}
-
 interface IDTO {
     public function create();
 }
 
-class QuestionAnswerCreator implements ICreateSurveyItems
+class QuestionAnswerCreator
 {
     private $request = null;
     private $DataToPopulateSurveysDTO = null;
@@ -30,7 +26,7 @@ class QuestionAnswerCreator implements ICreateSurveyItems
     public $questionDescriptions;
     public $answerDescriptions;
 
-    public function __construct(Request $request)
+    public function __construct($request)
     {
         $this->surveyName = $request->surveyName;
         $this->DeliveryFreq = $request->deliveryFrequency;

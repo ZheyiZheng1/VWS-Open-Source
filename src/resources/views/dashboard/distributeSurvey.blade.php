@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="/css/dashboard/mainrightbar.css" />
 
 	<script src="https://kit.fontawesome.com/555936ed9c.js" crossorigin="anonymous"></script>
-    <title>About VWS</title>
+    <title>Distribute Survey</title>
 
 </head>
 
@@ -58,33 +58,53 @@
                     <option value="SurveyWorkout">Survey Workout</option>
                 </select>
 
-                <h2>List the Participants of the Study</h2>
-                <div class="input-group mb-3">
-                    <input type="text"
-                    name="participantOne" id="participantOne"
-                    class="form-control" value="tim" placeholder="Username of Participant" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                </div>
+                <div id="list-participants-for-the-study">
+                    <h2>List the Participants of the Study</h2>
+                    <div class="input-group mb-3" id="participant-1-group">
+                        <select class="form-select" name="participantOne" id="participantOne" placeholder="Username of Participant" >
+                            <option selected>Select Participant</option>
+                            @foreach ($participants as $participant)
+                                <option value="{{$participant['id']}}">{{ $participant["name"] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <div class="input-group mb-3">
-                    <input type="text"
-                    name="participantTwo" id="participantTwo"
-                    class="form-control" value="john" placeholder="Username of Participant" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                    <div class="input-group mb-3" id="participant-2-group">
+                        <select class="form-select" name="participantTwo" id="participantTwo" placeholder="Username of Participant" >
+                            <option selected>Select Participant</option>
+                            @foreach ($participants as $participant)
+                                <option value="{{$participant['id']}}">{{ $participant["name"] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="input-group mb-3" id="participant-3-group">
+                        <select class="form-select" name="participantThree" id="participantThree" placeholder="Username of Participant" >
+                            <option selected>Select Participant</option>
+                            @foreach ($participants as $participant)
+                                <option value="{{$participant['id']}}">{{ $participant["name"] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="input-group mb-3" id="participant-4-group">
+                        <select class="form-select" name="participantFour" id="participantFour" placeholder="Username of Participant" >
+                            <option selected>Select Participant</option>
+                            @foreach ($participants as $participant)
+                                <option value="{{$participant['id']}}">{{ $participant["name"] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="input-group mb-3" id="participant-5-group">
+                        <select class="form-select" name="participantFive" id="participantFive" placeholder="Username of Participant" >
+                            <option selected>Select Participant</option>
+                            @foreach ($participants as $participant)
+                                <option value="{{$participant['id']}}">{{ $participant["name"] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <div class="input-group mb-3">
-                    <input type="text"
-                    name="participantThree" id="participantThree"
-                    class="form-control" value="dave" placeholder="Username of Participant" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                </div>
-                <div class="input-group mb-3">
-                    <input type="text"
-                    name="participantFour" id="participantFour"
-                    class="form-control" value="ferris" placeholder="Username of Participant" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                </div>
-                <div class="input-group mb-3">
-                    <input type="text"
-                    name="participantFive" id="participantFive"
-                    class="form-control" value="spencer" placeholder="Username of Participant" aria-label="Example text with button addon" aria-describedby="button-addon1">
-                </div>
+                <!--A button that use to add participant dynamically-->
+                <button type='button' value='add' class="btn btn-primary" onclick="add_field()">Add another participant</button>
+                <button type='button' value='remove' class="btn btn-primary" onclick="remove_field()">Remove another participant</button>
 
                 <h2>List the Questions & Answers for the Study</h2>
                 <div class="input-group mb-3">
@@ -167,6 +187,51 @@
 
     <script>
         document.getElementById('programstartdate').valueAsDate = new Date(); //this sets program start to default date
+        //reqs_id use to keep track the number of participants
+        var reqs_id = 5;
+
+        function removeElement(ev) {
+            var button = ev.target;
+            var field = button.previousSibling;
+            var div = button.parentElement;
+            div.removeChild(button);
+            div.removeChild(field);
+        }
+
+        function remove_field() {
+            let inputGroup = document.getElementById('list-participants-for-the-study');
+            
+            if (reqs_id < 2 || reqs_id > 10) return;
+            console.log(reqs_id);
+            console.log(inputGroup.children[reqs_id])
+            //remove last child node
+            inputGroup.removeChild(inputGroup.children[reqs_id]);
+            reqs_id--;
+
+        }
+
+        function add_field() {
+            let numbersInText = ["Zero", "One", "Two", "Three", "Four", "Five", "Six",
+            "Seven", "Eight", "Nine", "Ten"];
+
+            if (reqs_id < 2 || reqs_id > 9) return;
+            reqs_id++; // increment reqs_id to get a unique ID for the new element
+
+            //get the first group div
+            let inputGroup = document.getElementById('participant-1-group').cloneNode(true);
+            console.log(inputGroup)
+            inputGroup.setAttribute("id", "participant-" + reqs_id + "-group");
+
+            //get the first child node
+            let selectGroup = inputGroup.children[0];
+            selectGroup.setAttribute("id", "participant" + numbersInText[reqs_id]);
+            selectGroup.setAttribute("class", "participant" + numbersInText[reqs_id]);
+            selectGroup.setAttribute("name", "participant" + numbersInText[reqs_id]);
+
+            //get the group of nodes to append
+            let inputNode = document.getElementById('list-participants-for-the-study');
+            inputNode.appendChild(inputGroup);
+        }
     </script>
 </body>
 
