@@ -14,10 +14,30 @@ class Questions extends Model
      *
      * @var array
      */
-    protected $fillable = [
+    /*protected $fillable = [
         'updated_at',
         'Description',
         'isAnsweredRepeatedly',
         'survey_lists_id',
-    ];
+    ];*/
+
+   /* protected $fillable = [
+        'updated_at',
+        'Description',
+        'isAnsweredRepeatedly',
+        'survey_lists_id',
+    ];*/
+
+    protected $guarded=[];
+
+    public function surveys()
+    {
+        return $this->belongsTo(Questionnaires::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answers::class);
+    }
+    protected $table = "alt_questions";
 }

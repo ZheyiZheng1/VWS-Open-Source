@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Surveys;
 
+use App\Models\Survey;
+
 use App\Models\AppendixO;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
-
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
+use App\Models\SurveyList;
 
 class SurveyController extends Controller
 {
@@ -123,4 +125,31 @@ class SurveyController extends Controller
 
         return true;
     }
+
+    public function createSurvey()
+    {
+        return view('survey.createSurvey');
+    }
+
+    public function surveyStore(Request $request)
+    {
+        $data= request()->validate([
+            'surveyName'=> 'required',
+            'programdate'=> 'required|date'
+        ]);
+            //dd($data);
+
+        $survey= SurveyList::create([
+            'SurveyName' => $data['surveyName'],
+            'DeliveryDate' => $data['programdate'],
+        ]);
+
+        return redirect('/surveys/'.$survey->id);
+    }
+
+    public function show(Survey $survey)
+    {
+        return view('survey.show',compact('survey'));
+    }
+
 }

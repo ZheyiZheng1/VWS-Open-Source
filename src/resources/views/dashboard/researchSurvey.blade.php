@@ -21,35 +21,38 @@
             @include('dashboard.leftsidebar')
         @show
 
-        <section class="right-panel" >
-        <h1>Good Morning Researcher,</h1>
+        <section class="right-panel">
+        <h2>Good Morning Researcher,</h2>
         <br>
         <p>Here are a list of Surveys available</p>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Surveys</th>
-                    <th scope="col">Responses</th>
-                    <th scope="col">Completion Rate</th>
-                    <th scope="col">Program Date</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
+        <div class="ml-auto"><a href="{{route('createSurvey')}}" class="btn btn-success" style="width: 250px;">Create New Survey</a></div>
+        <div class="table-section"> <!--table-->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Surveys</th>
+                        <th scope="col">Responses</th>
+                        <th scope="col">Completion Rate</th>
+                        <th scope="col">Program Date</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            @foreach($SurveysAvailable as $Survey)
-                <tr>
-                     <th scope="row">1</th>
-                     <td>{{ $Survey['SurveyName'] }}</td>
-                     <td>0</td>
-                     <td>0%</td>
-                     <td>{{ $Survey['DeliveryDate'] }}</td>
-                     <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+                @foreach($SurveysAvailable as $Survey)
+                    <tr>
+                         <th scope="row">1</th>
+                         <td>{{ $Survey['SurveyName'] }}</td>
+                         <td>0</td>
+                         <td>0%</td>
+                         <td>{{ $Survey['DeliveryDate'] }}</td>
+                         <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
         </section>
     </div>
 </body>
