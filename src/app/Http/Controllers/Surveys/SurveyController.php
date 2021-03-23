@@ -146,7 +146,7 @@ class SurveyController extends Controller
             'DeliveryDate' => $data['programdate'],
         ]);
 
-        return redirect('/surveys/'.$survey->id);
+        return redirect('surveys/'.$survey->id);
     }
 
     public function show(Survey $survey)

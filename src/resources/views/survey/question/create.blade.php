@@ -17,130 +17,106 @@
         @show
         <section class="right-panel">
             <h2>Good Morning Researcher,</h2>
-            <div class="survey-create card mt-4" >
-                <div class="card-header">Create a new question
-                </div>
-                <div class="card-body">
-                    <form action="/surveys/{{$survey->id}}/questions" method="POST">
-                        @csrf
-                        <div class="form-group mb-2">
-                            <label for="question">Enter Question</label>
-                            <input name="question[question]" type="text" class="form-control" id="question" placeholder="Enter Question"
-                            value="{{ old('question.question') }}">
+            <form action="/surveys/{{$survey->id}}/questions" method="POST">
+                <div class="survey-create card mt-4" id="question1">
+                    <div class="card-header">
+                        Create a new question
+                    </div>
+                    <div class="card-body">
+                            @csrf
+                            <div class="form-group mb-2">
+                                <label for="question">Enter Question</label>
+                                <input name="question[question]" type="text" class="form-control" id="question" placeholder="Enter Question"
+                                value="{{ old('question.question') }}">
 
-                            @error('question.question')
-                                <small class="text-danger">{{$message}}</small>
-                            @enderror
-                        </div>
+                                @error('question.question')
+                                    <small class="text-danger">{{$message}}</small>
+                                @enderror
+                            </div>
                             <div class="form-group mb-2">
                                     <label for="question-type">Select question type</label>
-                                    <select class="form-control" name="question[type]" id="prefs" onchange="prefValue()">
-                                      <option value="radio">Multiple Choice</option>
-                                      <option value="text">Text/Number</option>
-                                      <option value="range">Likert Scale</option>
+                                    <select class="form-control" name="question[type]" id="prefs" onchange="javascript:prefValue()">
+                                    <option value="radio">Multiple Choice</option>
+                                    <option value="text">Text/Number</option>
+                                    <option value="range">Likert Scale</option>
                                     </select>
                             </div>
+                            <div class="form-group mb-2 likert-choice" style="display: none;">
+                                <label for="likert">Enter Likert value</label>
+                                <input name="answer[answerValue]" type="number" class="form-control" placeholder="Enter Likert Value" value="{{ old('answer.answerValue') }}">
 
+                                @error('answer.answerValue')
+                                <small class="text-danger">{{$message}}</small>
+                                @enderror
 
-
-                            <div id="question_types">
                             </div>
-                                <button type="submit" class="btn btn-dark">Add Question</button>
+                            <div class="form-group mb-2 yesno-choice" style="display: block;">
+                                <fieldset>
+                                    <legend>Choices</legend>
+                                        <div>
+                                            <div class="form-group">
+                                                <label for="answer1">Choice 1</label>
+                                                <input name="answers[][answerValue]" type="text"
+                                                class="form-control" id="answer1" aria-describedby="choicesHelp"
+                                                placeholder="Enter Choice 1" />
+
+                                                @error('answers.0.answerValue')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <div class="form-group">
+                                                <label for="answer2">Choice 2</label>
+                                                <input name="answers[][answerValue]" type="text"
+                                                class="form-control" id="answer2"
+                                                aria-describedby="choicesHelp" placeholder="Enter Choice 2" />
+
+                                                @error('answers.1.answerValue')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                </fieldset>
+                            </div>
+                            <input class="text-choice" type="input" name="answer[answerValue]" style="display: none;" value="">
                         </div>
-                    </form>
+                    </div>
+                <div id="question_types">
+                    <button type="submit" class="btn btn-dark">Add Question</button>
                 </div>
-            </div>
+            </form>
         </section>
     </div>
     <script>
-        let choices;
 
-        let likertString = `
-        <div class="form-group mb-2">
-                <label for="likert">Enter Likert value</label>
-                <input name="answer[answerValue]" type="number" class="form-control" placeholder="Enter Likert Value" value="{{ old('answer.answerValue') }}">
-
-                @error('answer.answerValue')
-                    <small class="text-danger">{{$message}}</small>
-                    @enderror
-        </div>`;
-
-    let radioString= `
-    <div class="form-group mb-2">
-        <fieldset>
-            <legend>Choices</legend>
-                <div>
-                    <div class="form-group">
-                        <label for="answer1">Choice 1</label>
-                        <input name="answers[][answerValue]" type="text"
-                        value="{{ old('answers.0.answerValue') }}"
-                        class="form-control" id="answer1" aria-describedby="choicesHelp" placeholder="Enter Choice 1" value="{{ old('answer.0.answerValue') }}">
-
-                                @error('answers.0.answerValue')
-                                    <small class="text-danger">{{ $message }}</small>
-                                 @enderror
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="form-group">
-                        <label for="answer2">Choice 2</label>
-                        <input name="answers[][answerValue]" type="text"
-                        value="{{ old('answers.1.answerValue') }}"
-                        class="form-control" id="answer2" aria-describedby="choicesHelp" placeholder="Enter Choice 2" value="{{ old('answer.1.answerValue') }}">
-
-                        @error('answers.1.answerValue')
-                            <small class="text-danger">{{ $message }}</small>
-                        @enderror
-                    </div>
-                </div>
-            </fieldset>
-    </div>`;
-
-            let textString = `<input type="hidden" name="answer[answerValue]" value="null">`;
-        const prefValue = ()=>{
+        const prefValue = function() {
             let optionSelected = document.getElementById('prefs').value;
-            const newDiv = document.createElement("div");
+            if(optionSelected === 'range') rangeFunction();
+            if(optionSelected === 'radio') radioFunction();
+            if(optionSelected === 'text') textFunction();
+        }
 
-            if(optionSelected === 'range')
-            {
-                let choices = document.getElementById('choices');
-                if(choices != null)
-                {
-                    if(choices.style.display === 'block')
-                {
-                    choices.style.display = 'none';
-                }
-                }
+        function rangeFunction() {
+            let choices = document.getElementById('question1');
+            choices.children[1].children[3].setAttribute("style", "display: block;");
+            choices.children[1].children[4].setAttribute("style", "display: none;");
+            choices.children[1].children[5].setAttribute("style", "display: none;");
+        }
 
-                //document.getElementById('choices').style.display = 'none';
-                newDiv.id = "likerts";
-                newDiv.innerHTML = likertString;
-                document.getElementById('question_types').appendChild(newDiv);
+        function radioFunction() {
+            let choices = document.getElementById('question1');
+            choices.children[1].children[3].setAttribute("style", "display: none;");
+            choices.children[1].children[4].setAttribute("style", "display: block;");
+            choices.children[1].children[5].setAttribute("style", "display: none;");
+        }
 
-                //document.getElementById('choices').style.display = 'none';
-            }
-            if(optionSelected === 'radio')
-            {
-                let likert = document.getElementById('likerts');
-                if(likert != null){
-                    if(likert.style.display === 'block')
-                {
-                    likert.style.display = 'none';
-                }
-                }
-                newDiv.id = "choices";
-                newDiv.innerHTML = radioString;
-                document.getElementById('question_types').appendChild(newDiv);
-
-            }
-            if(optionSelected === 'text')
-            {
-                /*document.getElementById('likerts').style.display='none';
-                document.getElementById('choices').style.display='none';
-                newDiv.innerHTML = ;
-                document.getElementById('question_types').appendChild(newDiv);*/
-            }
+        function textFunction() {
+            let choices = document.getElementById('question1');
+            choices.children[1].children[3].setAttribute("style", "display: none;");
+            choices.children[1].children[4].setAttribute("style", "display: none;");
+            choices.children[1].children[5].setAttribute("style", "display: block;");
         }
     </script>
 </body>
