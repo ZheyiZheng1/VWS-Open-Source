@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Surveys\SurveyAggregate;
+namespace App\Http\Controllers\Surveys\SurveyBuilder;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,8 +11,8 @@ use App\Models\SurveyList;
 use App\Models\Questions;
 use App\Models\Answers;
 
-use App\Http\Controllers\Surveys\SurveyBuilder\QuestionAnswerCreator;
-use App\Http\Controllers\Surveys\SurveyBuilder\SurveyCreator;
+use App\Http\Controllers\Surveys\SurveyClass\QuestionAnswerCreator;
+use App\Http\Controllers\Surveys\SurveyClass\SurveyCreator;
 class DistributeSurvey
 {
     private $request = null;
@@ -33,7 +33,7 @@ class DistributeSurvey
     public function create() {
 
 
-        $result[0] = new SurveyCreator($this->request);
+        $result[0] = new QuestionAnswerCreator($this->request);
         $result[1] = new SurveyCreator($this->request);
 
         $result[0]->createSurvey();

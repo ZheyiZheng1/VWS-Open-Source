@@ -9,37 +9,37 @@
 		<p>We would like to know how confident you are in doing certain activities. For each of the following questions, please choose the number that corresponds to your confidence that you can do the tasks regularly at the present time. 1 as not at all confident and 10 as total confident.</p>
         @csrf
 		<div class="mb-3" id='surveyQuestion'>
-			<label for="customRange1" class="form-label">How confident do you feel that you can keep the fatigue caused by your disease from interfering with the things you want to do?</label>
+			<label for="customRange1" class="form-label">{{ $questions[0] }}</label>
 			<input name="question1" type="range" class="form-range" min="1" max="10" step="1" id="customRange1" oninput="this.nextElementSibling.value = this.value">
 			<output>6</output>
 		</div>
 
 		<div class="mb-3" id='surveyQuestion'>
-			<label for="customRange2" class="form-label">How confident do you feel that you can keep the physical discomfort or pain of your disease from interfering with the things you want to do?</label>
+			<label for="customRange2" class="form-label">{{ $questions[1] }}</label>
 			<input name="question2" type="range" class="form-range" min="1" max="10" step="1" id="customRange2" oninput="this.nextElementSibling.value = this.value">
 			<output>6</output>
 		</div>
 
 		<div class="mb-3" id='surveyQuestion'>
-			<label for="customRange3" class="form-label">How confident do you feel that you can keep the emotional distress caused by your disease from interfering with the things you want to do?</label>
+			<label for="customRange3" class="form-label">{{ $questions[2] }}</label>
 			<input name="question3"  type="range" class="form-range" min="1" max="10" step="1" id="customRange3" oninput="this.nextElementSibling.value = this.value">
 			<output>6</output>
 		</div>
 
 		<div class="mb-3" id='surveyQuestion'>
-			<label for="customRange4" class="form-label">How confident do you feel that you can keep any other symptoms or health problems you have from interfering with the things you want to do?</label>
+			<label for="customRange4" class="form-label">{{ $questions[3] }}</label>
 			<input name="question4" type="range" class="form-range" min="1" max="10" step="1" id="customRange4" oninput="this.nextElementSibling.value = this.value">
 			<output>6</output>
 		</div>
 
 		<div class="mb-3" id='surveyQuestion'>
-			<label for="customRange5" class="form-label">How confident do you feel that you can the different tasks and activities needed to manage your health condition so as to reduce your need to see a doctor?</label>
+			<label for="customRange5" class="form-label">{{ $questions[4] }}</label>
 			<input name="question5" type="range" class="form-range" min="1" max="10" step="1" id="customRange5" oninput="this.nextElementSibling.value = this.value">
 			<output>6</output>
 		</div>
 
 		<div class="mb-3" id='surveyQuestion'>
-			<label for="customRange6" class="form-label">How confident do you feel that you can do things other than just taking medication to reduce how much your illness affects your everyday life?</label>
+			<label for="customRange6" class="form-label">{{ $questions[5] }}</label>
 			<input name="question6" type="range" class="form-range" min="1" max="10" step="1" id="customRange6" oninput="this.nextElementSibling.value = this.value">
 			<output>6</output>
 		</div>

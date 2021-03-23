@@ -17,7 +17,15 @@ class AppendixOController extends Controller
 
     public function index()
     {
-        return view('dashboard/appendixO');
+        $questions = ['Age',
+                    'Gender',
+                    'Height',
+                    'Weight',
+                    'Occupation',
+                    'Full time or part time employment',
+                    'Chronic conditions'
+                ];
+        return view('dashboard/appendixO', compact('questions'));
     }
 
     public function store(Request $request)

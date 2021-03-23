@@ -12,7 +12,7 @@ class LogoutController extends Controller
     {
         auth()->logout();
 
-        return redirect()->route('logoutSuccessPage');
+        return view('logoutsuccess');
     }
 }
 

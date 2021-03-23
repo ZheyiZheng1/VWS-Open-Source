@@ -18,24 +18,43 @@ class SurveyUserListObject //implements IDTO
     private $request = null;
     private $SurveyUserListObject = null;
 
-    public function __construct(Int $authId, Int $AvailableSurveysID, String $ProgramStartDate)
+    public function __construct()
     {
-        $this->authId = $authId;
-        $this->AvailableSurveysID = $AvailableSurveysID;
-        $this->ProgramStartDate = $ProgramStartDate;
     }
 
-    public function create($SurveyUserList) {
+    public static function withAuthIdAvailableSurveysIdProgramStartDate(Int $authId, Int $AvailableSurveysID, String $ProgramStartDate)
+    {
+        $instance = new self();
+        $instance->authId = $authId;
+        $instance->AvailableSurveysID = $AvailableSurveysID;
+        $instance->ProgramStartDate = $ProgramStartDate;
+        return $instance;
+    }
+
+    public static function withUserId(Int $userId) {
+        $instance = new self();
+        $instance->userId = $userId;
+        return $instance;
+    }
+
+    public function create($SurveyUserList, $participant) {
 
         $this->SurveyUserListObject = $SurveyUserList::create([
             'updated_at' => date('Y-m-d H:i:s') . '',
             'isCompleted' => false,
-            'user_id' => $this->authId,
+            'user_id' => $participant,
             'survey_id' => $this->AvailableSurveysID,
             'ProgramStartDate' => $this->ProgramStartDate
         ]);
 
         return $this->SurveyUserListObject;
 
+    }
+
+    public function displaySurveyUserList($modelSurveyUserList) {
+
+        $this->SurveyUserListObject = $modelSurveyUserList::where('user_id', $this->userId)->get();
+
+        return $this->SurveyUserListObject;
     }
 }

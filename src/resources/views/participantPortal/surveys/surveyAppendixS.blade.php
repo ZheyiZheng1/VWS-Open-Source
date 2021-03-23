@@ -46,7 +46,7 @@
         </div>
 
 		<div class="mb-3"id='surveyQuestion'>
-            <label for="surveyQuestion" class="form-label">{{ $questions[5] }}</label>
+            <label for="surveyQuestion" class="form-label">{!! $questions[5] !!}</label>
             <input type="text" class="form-control" name="questionSix" placeholder="(0-10)" aria-describedby="questionSix">
         </div>
 	</div>

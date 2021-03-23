@@ -16,7 +16,20 @@ class AppendixRController extends Controller
 
     public function index()
     {
-        return view('dashboard/appendixR');
+        $questions = ['Went to see your family physician?',
+                    'Went to see a specialist',
+                    'Went to see another healthcare provider',
+                    'Please list the other healthcare providers that you have seen：',
+                    'Went to a walk in clinic?',
+                    'If yes, how many times?',
+                    'Went to the emergency room?',
+                    'If yes, how many times?',
+                    'Were admitted to the hospital?',
+                    'If yes, how many times?',
+                    'Spent the night in the hospital?',
+                    'If yes, how many nights?'
+                ];
+        return view('dashboard/appendixR' compact('questions'));
     }
 
     public function store(Request $request)

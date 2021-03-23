@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\models\User;
+use Bouncer;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -25,13 +27,23 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        if (!auth()->attempt($request->only('email', 'password'), $request->remember)) {
+        $isNotAuthenticated = !auth()->attempt($request->only('email', 'password'), $request->remember);
 
+        if ($isNotAuthenticated) {
             return back()->with('status', 'Invalid login details');
         }
 
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        //This if statement ultimately shouldn't exist as-is
+        if ($isAdmin) {
+            return redirect()->route('dashboard');
+        } else if ($isParticipant) {
+            return redirect()->route('surveylisted');
+        } else {
+            return back()->with('status', 'You are not an administrator');
+        }
 
-        return redirect()->route('dashboard');
     }
 
     public function indexresearcher()
@@ -52,22 +64,22 @@ class LoginController extends Controller
         $isNotAuthenticated = !auth()->attempt($request->only('email', 'password'), $request->remember);
 
         if ($isNotAuthenticated) {
-
             return back()->with('status', 'Invalid login details');
         }
 
-        $isAdmin = auth()->user()->isAdmin();
-
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
         //This if statement ultimately shouldn't exist as-is
         if ($isAdmin) {
-
             return redirect()->route('dashboard');
+        } else if ($isParticipant) {
+            return redirect()->route('surveylisted');
         } else {
             return back()->with('status', 'You are not an administrator');
         }
 
     }
-    
+
     //Next two function is for user profile page.
     public function showProfileData($id){
         //take data from database and pass to user profile page by using user id.

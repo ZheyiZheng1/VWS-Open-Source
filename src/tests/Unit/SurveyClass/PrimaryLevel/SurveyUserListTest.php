@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\SurveyClass\PrimaryLevel\SurveyUserListTest;
 
 use App\Http\Controllers\Surveys\SurveyClass\PrimaryLevel\SurveyUserListObject;
 use PHPUnit\Framework\TestCase;

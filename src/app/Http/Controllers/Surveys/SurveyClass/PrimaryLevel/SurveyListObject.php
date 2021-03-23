@@ -35,13 +35,13 @@ class SurveyListObject //implements IDTO
         return $instance;
     }
 
-    public function display($SurveyList) {
-        $this->SurveyListObject = $SurveyList::find($this->SurveyListId);
+    public function display($modelSurveyList) {
+        $this->SurveyListObject = $modelSurveyList::find($this->SurveyListId);
         return $this->SurveyListObject;
     }
 
-    public function displayAll($SurveyList) {
-        $this->SurveyListObject = $SurveyList::all();
+    public function displayAll($modelSurveyList) {
+        $this->SurveyListObject = $modelSurveyList::all();
         return $this->SurveyListObject;
     }
 
