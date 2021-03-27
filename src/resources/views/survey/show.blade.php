@@ -22,7 +22,7 @@
                 </div>
                 <div class="card-body">
                     <div>
-                        <a class="btn btn-dark" href="/surveys/{{ $survey->id }}/questions/create">Add New Question</a>
+                        <a class="btn btn-dark" href="/surveys/questions/create?surveyId={{ $survey->id }}">Add New Question</a>
                         <a class="btn btn-dark" href="#">Add a Participant</a>
                     </div>
                     @foreach ($survey->questions as $question)

@@ -75,8 +75,8 @@ Route::post('/dashboard/sampleSurvey', [SurveyController::class, 'store'])->name
 Route::get('/surveys/createSurvey', [SurveyController::class, 'createSurvey'])->name('createSurvey');
 Route::post('/surveys/createSurvey', [SurveyController::class, 'surveyStore'])->name('storeSurvey');
 Route::get('/surveys/{survey}',[SurveyController::class, 'show']);
-Route::get('/surveys/{survey}/questions/create',[QuestionController::class, 'create']);
-Route::post('/surveys/{survey}/questions',[QuestionController::class, 'store']);
+Route::get('/surveys/questions/create',[QuestionController::class, 'create']);
+Route::post('/surveys/questions',[QuestionController::class, 'store']);
 
 Route::get('/dashboard/researchSurvey', [SurveyController::class, 'researchSurvey'])->name('researchSurvey');
 Route::get('/dashboard/distributeSurvey', [SurveyController::class, 'showDistributeSurvey'])->name('DistributeSurveyIndex');

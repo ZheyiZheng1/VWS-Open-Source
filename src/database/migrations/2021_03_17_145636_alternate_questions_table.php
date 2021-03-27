@@ -17,7 +17,7 @@ class AlternateQuestionsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('survey_id');
             $table->string('question');
-            $table->string('type')->nullable();
+            $table->string('type');
             $table->timestamps();
         });
     }

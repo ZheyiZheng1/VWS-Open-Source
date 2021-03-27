@@ -7,36 +7,47 @@ use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
-    public function create(Survey $survey)
+    public function create(Request $request)
     {
+        // dd($request);
+        $survey = Survey::where('id', request()->surveyId)->first();
+
         return view('survey.question.create',compact('survey'));
     }
-
-    public function store(Survey $survey)
+    public function store(Survey $survey, Request $request)
     {
-
-        //dd(request());
-        $data = request()->validate([
-            'question.question'=>'required',
-            'question.type'=>'required',
-            'answer.answerValue'=>'required',
-            'answers.*.answerValue'=>'required'
-        ]);
-        dd($data);
-        $type= $data['question']['type'];
-        $singleAnswer= $data['answer']['answerValue'];
+        // dd($request->answers);
+        $survey = Survey::where('id', request()->surveyId)->first();
+        // $data = request()->validate([
+        //     'question.question'=>'required',
+        //     'question.type'=>'required',
+        //     'answer.answerValue'=>'required',
+        //     'answers.*.answerValue'=>'required'
+        // ]);
+        // dd($data);
+        $type= $request->questionType;
+        // dd($type)
+        $singleAnswer= $request->likertScaleAnswer;
+        // dd($survey->questions());
+        $question = $survey->questions()->create([
+            'question' => $request->question,
+            'type' => $request->questionType
+        ]); //question is created in db
         if($type === 'radio')
         {
-            $question = $survey->questions()->create($data['question']); //question is created in db
-            $question->answers()->createMany($data['answers']);
+            $question->answers()->createMany([['answerValue' => $request->choiceOne], ['answerValue' => $request->choiceTwo]]);
         }
-        if($singleAnswer !== 'null')
+        if($type === 'range')
         {
-            $question = $survey->questions()->create($data['question']); //question is created in db
-            $question->answers()->create($data['answer']);
+            $answerValue = $request->likertScaleAnswer;
+            $question->answers()->create(['answerValue' => $answerValue]);
+        }
+        if($type === 'text')
+        {
+            $question->answers()->create(['answerValue' => $request->textChoice]);
         }
 
 
-        return redirect('/surveys/'.$survey->id); //redirect back to the survey
+        return redirect('surveys/'.$request->surveyId); //redirect back to the survey
     }
 }
