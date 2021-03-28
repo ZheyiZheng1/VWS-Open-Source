@@ -47,7 +47,7 @@
                          <td>0</td>
                          <td>0%</td>
                          <td>{{ $Survey['DeliveryDate'] }}</td>
-                         <td><button type="edit" class="btn btn-success" style="width: 150px;">Edit</button></td>
+                         <td> <a class="btn btn-success" style="width: 150px;" href="/surveys/{{$Survey['id']}}">View</a>
                     </tr>
                 @endforeach
                 </tbody>
