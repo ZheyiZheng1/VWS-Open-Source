@@ -9,6 +9,8 @@ use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
 use App\Http\Controllers\Surveys\SurveyBuilder\DistributeSurvey;
 
 use App\models\User;
+use App\models\Questions;
+use App\models\Answers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Bouncer;
@@ -38,15 +40,13 @@ class ParticipantController extends Controller
     {
         if(strcmp($this->checkUserPermissions(), 'admin') === 0) return redirect()->route('dashboard');
 
-        $SurveyRetriever = new SurveyRetriever($request['SurveyList']);
-        $retrievedSurveyInfo = $SurveyRetriever->displaySurvey();
+        $questions = Questions::where('survey_id', $request->SurveyList)->get();
+        $answers = [];
+        foreach ($questions as $question) {
+            $answers[] = Answers::where('questions_id', $question->id)->get();
 
-        for ($idx = 0; $idx < count($retrievedSurveyInfo); $idx++) {
-            // dd($retrievedSurveyInfo[$idx]);
-            $questions[$idx] = $retrievedSurveyInfo[$idx]->QuestionDescription;
         }
-
-        return view('participantPortal/appendixS', ['questions' => $questions]);
+        return view('participantPortal/appendixS', compact('questions', 'answers'));
     }
 
     public function availableSurveys(Request $request)
