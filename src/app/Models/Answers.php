@@ -14,10 +14,19 @@ class Answers extends Model
      *
      * @var array
      */
-    protected $fillable = [
+   /* protected $fillable = [
         'updated_at',
         'answerValue',
         'question_id',
         'participant_user_id'
-    ];
+    ];*/
+
+    protected $guarded= [];
+
+    public function question()
+    {
+        return $this->belongsTo(Questions::class);
+    }
+
+    protected $table = "alt_answers";
 }

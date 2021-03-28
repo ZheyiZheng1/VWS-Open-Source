@@ -24,7 +24,7 @@
         <section class="right-panel" >
             <form id='surveyForm' action="{{ route('AppendixS') }}" method="post">
                 @section('surveyAppendixS')
-                    @include('participantPortal.surveys.appendices.surveyAppendixS')
+                    @include('participantPortal.surveys.surveyAppendixS')
                 @show
             <button type="submit" class="btn btn-primary" style="width: 150px;">Submit</button>
             </form>

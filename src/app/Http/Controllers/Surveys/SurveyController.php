@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers\Surveys;
 
+use App\Models\Survey;
+use App\Models\User;
+
 use App\Models\AppendixO;
+use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
 use App\Http\Controllers\Surveys\SurveyBuilder\DistributeSurvey;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
+use App\Models\SurveyList;
+use App\Models\SurveyUserList;
 
+use Bouncer;
 class SurveyController extends Controller
 {
     public function __construct()
@@ -123,5 +129,80 @@ class SurveyController extends Controller
         ]);
 
         return true;
+    }
+
+    public function createSurvey()
+    {
+        return view('survey.createSurvey');
+    }
+
+    public function surveyStore(Request $request)
+    {
+        $data= request()->validate([
+            'surveyName'=> 'required',
+            'programdate'=> 'required|date'
+        ]);
+
+        $survey= SurveyList::create([
+            'SurveyName' => $data['surveyName'],
+            'DeliveryDate' => $data['programdate'],
+        ]);
+
+        return redirect('surveys/'.$survey->id);
+    }
+
+    public function show(Survey $survey)
+    {
+        $surveyUserList = SurveyUserList::where('survey_id', $survey->id)->get();
+
+        //TODO: query outside the loop, this is very slow
+        for ($idx = 0; $idx < count($surveyUserList); $idx++) {
+            $surveyUserList[$idx] = User::where('id', $surveyUserList[$idx]->user_id)->first();
+        }
+        $survey->load('questions.answers');//lazy loading
+        return view('survey.show',compact('survey', 'surveyUserList'));
+    }
+
+    public function createParticipants(Survey $survey)
+    {
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
+        $participants = User::all();
+        $survey = Survey::where('id', request()->surveyId)->first();
+        return view('survey.createParticipants', ["participants"=>$participants, 'survey' => $survey]);
+
+    }
+
+    public function storeParticipants(Request $request) {
+
+
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+        if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
+
+        $survey = Survey::where('id', request()->surveyId)->first();
+        $participantArr = $request->participant;
+
+        foreach ($participantArr as $participant) {
+            $newEntry = SurveyUserList::create([
+                'user_id' => $participant,
+                'survey_id' => $survey->id
+            ]);
+        }
+
+
+        return redirect('surveys/' . $survey->id); //redirect back to the survey
+    }
+
+    public function checkUserPermissions($isAdmin, $isParticipant) {
+        //This if statement ultimately shouldn't exist as-is
+        if ($isAdmin) {
+            return 'admin';
+        } else if ($isParticipant) {
+            return 'participant';
+        } else {
+            return 'superadmin';
+        }
     }
 }

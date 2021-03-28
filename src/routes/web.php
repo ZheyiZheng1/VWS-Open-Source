@@ -2,10 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\GeneralWebsiteController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\GeneralWebsiteController;
+use App\Http\Controllers\Surveys\SurveyController;
 use App\Http\Controllers\Surveys\AppendixOController;
 use App\Http\Controllers\Surveys\AppendixQController;
 use App\Http\Controllers\Surveys\AppendixRController;
@@ -13,9 +15,9 @@ use App\Http\Controllers\Surveys\AppendixSController;
 use App\Http\Controllers\Surveys\AppendixTController;
 use App\Http\Controllers\Surveys\ParticipantController;
 use App\Http\Controllers\Surveys\ResearcherController;
-use App\Http\Controllers\Surveys\SocialWorkoutController;
 use App\Http\Controllers\Surveys\SocialEatingController;
 use App\Http\Controllers\Surveys\PatientHealthController;
+use App\Http\Controllers\Surveys\SocialWorkoutController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,6 +67,22 @@ Route::post('/dashboard/surveys/appendices/SocialWorkoutSurvey', [SocialWorkoutC
 Route::get('/participant-portal/available-surveys/index.html', [ParticipantController::class, 'index'])->name('RetrieveSurvey');
 Route::get('/participant-portal/available-surveys.html', [ParticipantController::class, 'availableSurveys'])->name('surveylisted');
 
+
+
+Route::get('/dashboard/sampleSurvey', [SurveyController::class, 'index'])->name('SampleSurveyindex');
+Route::post('/dashboard/sampleSurvey', [SurveyController::class, 'store'])->name('SampleSurveystore');
+
+Route::get('/surveys/createSurvey', [SurveyController::class, 'createSurvey'])->name('createSurvey');
+Route::post('/surveys/createSurvey', [SurveyController::class, 'surveyStore'])->name('storeSurvey');
+Route::get('/surveys/{survey}',[SurveyController::class, 'show']);
+Route::get('/surveys/participants/create',[SurveyController::class, 'createParticipants'])->name('createParticipants');
+Route::post('/surveys/participants/create',[SurveyController::class, 'storeParticipants'])->name('createParticipantsStore');
+Route::get('/surveys/questions/create',[QuestionController::class, 'create']);
+Route::post('/surveys/questions',[QuestionController::class, 'store']);
+
+Route::get('/dashboard/researchSurvey', [SurveyController::class, 'researchSurvey'])->name('researchSurvey');
+Route::get('/dashboard/distributeSurvey', [SurveyController::class, 'showDistributeSurvey'])->name('DistributeSurveyIndex');
+Route::post('/dashboard/distributeSurvey', [SurveyController::class, 'DistributeSurveyStore'])->name('DistributeSurveyStore');
 Route::get('/dashboard', [ResearcherController::class, 'dashboard'])->name('dashboard');
 Route::get('/dashboard/sampleSurvey', [ResearcherController::class, 'index'])->name('SampleSurveyindex');
 Route::post('/dashboard/sampleSurvey', [ResearcherController::class, 'store'])->name('SampleSurveystore');

@@ -27,7 +27,7 @@ class CreateSurveyUserList extends Migration
 
             $table->bigInteger('survey_id')->unsigned()->index();
             $table->foreign('survey_id')
-                  ->references('id')->on(Models::table('available_surveys'))
+                  ->references('id')->on(Models::table('survey_lists'))
                   ->onUpdate('cascade')->onDelete('cascade');
         });
     }

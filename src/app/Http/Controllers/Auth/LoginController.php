@@ -26,14 +26,14 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
-        $isNotAuthenticated = !auth()->attempt($request->only('email', 'password'), $request->remember);
+        // $request->dd();
+        $isNotAuthenticated = !Auth::attempt($request->only('email', 'password'));
 
         if ($isNotAuthenticated) {
             return back()->with('status', 'Invalid login details');
         }
 
-        $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        // $isAdmin = Bouncer::is(Auth::user())->an('admin');
         $isParticipant = Bouncer::is(Auth::user())->an('participant');
         //This if statement ultimately shouldn't exist as-is
         if ($isAdmin) {
