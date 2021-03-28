@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Answers extends Model
+class AnswersRecorded extends Model
 {
     use HasFactory;
 
@@ -28,5 +28,5 @@ class Answers extends Model
         return $this->belongsTo(Questions::class);
     }
 
-    protected $table = "alt_answers";
+    protected $table = "answers";
 }

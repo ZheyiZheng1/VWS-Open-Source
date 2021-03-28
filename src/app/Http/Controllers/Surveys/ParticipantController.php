@@ -9,6 +9,11 @@ use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
 use App\Http\Controllers\Surveys\SurveyBuilder\DistributeSurvey;
 
 use App\models\User;
+use App\models\Questions;
+use App\models\Answers;
+use App\models\AnswersRecorded;
+use App\models\SurveyList;
+use App\models\SurveyUserList;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Bouncer;
@@ -18,13 +23,12 @@ class ParticipantController extends Controller
     public function __construct()
     {
         $this->middleware(['auth']);
-
-
     }
 
     public function checkUserPermissions() {
         $isAdmin = Bouncer::is(Auth::user())->an('admin');
-        $isParticipant = false;//Bouncer::is(Auth::user())->an('participant');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+
         //This if statement ultimately shouldn't exist as-is
         if ($isAdmin) {
             return 'admin';
@@ -39,25 +43,56 @@ class ParticipantController extends Controller
     {
         if(strcmp($this->checkUserPermissions(), 'admin') === 0) return redirect()->route('dashboard');
 
-        $SurveyRetriever = new SurveyRetriever($request['SurveyList']);
-        $retrievedSurveyInfo = $SurveyRetriever->displaySurvey();
+        $questions = Questions::where('survey_id', $request->SurveyList)->get();
+        $answers = [];
+        foreach ($questions as $question) {
+            $answers[] = Answers::where('questions_id', $question->id)->get();
 
-        for ($idx = 0; $idx < count($retrievedSurveyInfo); $idx++) {
-            // dd($retrievedSurveyInfo[$idx]);
-            $questions[$idx] = $retrievedSurveyInfo[$idx]->QuestionDescription;
         }
+        return view('participantPortal/appendixS', compact('questions', 'answers'));
+    }
 
-        return view('participantPortal/appendixS', ['questions' => $questions]);
+    public function storeNewSurvey(Request $request) {
+        // dd($request);
+        for ($idx = 0; $idx < 10; $idx++) {
+            if ($request["answer" . $idx]) {
+                $surveyComplete = AnswersRecorded::create([
+                    'answerValue' => $request["answer" . $idx],
+                    'question_id' => $request["questionNumber" . $idx],
+                    'participant_user_id' => Auth::user()->id
+                ]);
+            }
+        }
+        $SurveyUserListItem = SurveyUserList::find($request->SurveyList);
+        if ($SurveyUserListItem) {
+            $SurveyUserListItem['isCompleted'] = true;
+            $SurveyUserListItem->save();
+        }
+        return redirect('participant-portal/available-surveys.html');
     }
 
     public function availableSurveys(Request $request)
     {
         if(strcmp($this->checkUserPermissions(), 'admin') === 0) return redirect()->route('dashboard');
+        $surveyUserList = SurveyUserList::where([
+            'user_id' => Auth::user()->id,
+            'isCompleted' => false
+        ])->get();
+        $SurveysAvailable = [];
+        foreach ($surveyUserList as $surveyUser) {
+            $SurveysAvailable[] = SurveyList::where('id', $surveyUser->survey_id)->get();
+        }
 
-        $SurveyRetriever = SurveyRetriever::withEmptyConstructor();
-        $completedSurveys = $SurveyRetriever->displaySurveyUserList();
-
-        return view('participantPortal/availableSurveys', ['SurveysAvailable' => $completedSurveys]);
+        $surveyUserList = SurveyUserList::where([
+            'user_id' => Auth::user()->id,
+            'isCompleted' => true
+        ])->get();
+        $SurveysCompleted = [];
+        foreach ($surveyUserList as $surveyUser) {
+            $SurveysCompleted[] = SurveyList::where('id', $surveyUser->survey_id)->get();
+        }
+        // dd($SurveysAvailable);
+        return view('participantPortal/availableSurveys', compact('SurveysAvailable', 'SurveysCompleted'));
     }
 
 

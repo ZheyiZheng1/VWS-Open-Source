@@ -23,12 +23,13 @@ class CreateAnswersTable extends Migration
             $table->bigInteger('participant_user_id')->unsigned();
 
             $table->foreign('participant_user_id')
-                  ->references('id')->on(Models::table('participant_users'))
+                  ->references('id')->on(Models::table('users'))
                   ->onUpdate('no action')->onDelete('no action');
 
-            $table->foreign('question_id')
-                  ->references('id')->on(Models::table('questions'))
-                  ->onUpdate('no action')->onDelete('no action');
+            //TODO: add this constraint, alt_questions need to be moved up in the migrations
+            // $table->foreign('question_id')
+            //       ->references('id')->on(Models::table('alt_questions'))
+            //       ->onUpdate('no action')->onDelete('no action');
         });
     }
 
