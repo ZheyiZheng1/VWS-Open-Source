@@ -65,6 +65,7 @@ Route::get('/dashboard/surveys/appendices/SocialWorkoutSurvey', [SocialWorkoutCo
 Route::post('/dashboard/surveys/appendices/SocialWorkoutSurvey', [SocialWorkoutController::class,'store']);
 
 Route::get('/participant-portal/available-surveys/index.html', [ParticipantController::class, 'index'])->name('RetrieveSurvey');
+Route::post('/participant-portal/available-surveys/index.html', [ParticipantController::class, 'storeNewSurvey'])->name('AnswerSurvey');
 Route::get('/participant-portal/available-surveys.html', [ParticipantController::class, 'availableSurveys'])->name('surveylisted');
 
 
