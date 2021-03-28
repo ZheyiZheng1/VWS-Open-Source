@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-body">
                     <!--update the link for generate survey and generate report-->
-                    <h5 class="card-title">{{$data['name']}}</h5>
+                    <h5 class="card-title">{{$user_id[0]->name}}</h5>
                     <a href="#" class="card-link">Generate Survey</a>
                     <a href="#" class="card-link">Generate Report</a>
                 </div>
@@ -54,8 +54,8 @@
                                     @foreach ($survey_datas_A as $survey_data_A)
                                     <tr>
                                         <!--use survey_id and user_id to create link and load user answers-->
-                                        <td><a herf="{{ route('find_user_answer', [$data['id'], $survey_data_A->survey_id ]) }}">{{ $survey_data_A->survey_id }}</a></td>
-                                        <td><a herf="{{ route('find_user_answer', [$data['id'], $survey_data_A->survey_id ]) }}">{{ $survey_data_A->updated_at }}</a></td>
+                                        <td><a href="{{ route('find_user_answer', ['id' => $user_id[0]->name, 'survey_id' => $survey_data_A->survey_id ]) }}">{{ $survey_data_A->survey_id }}</a></td>
+                                        <td><a href="{{ route('find_user_answer', [$user_id[0]->name, $survey_data_A->survey_id ]) }}">{{ $survey_data_A->updated_at }}</a></td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     </div>
-                    
+
                     <div class="col-sm-4">
                     <div class="card">
                         <div class="card-body">
@@ -93,7 +93,7 @@
         </section>
     </div>
 
-    
+
 </body>
 
 </html>
