@@ -30,7 +30,7 @@ class RegisterController extends Controller
             'password' => 'required|confirmed',
         ]);
 
-        $newUser = ParticipantUser::create([ //stores the user in that table
+        $newUser = User::create([ //stores the user in that table
             'name'=> $request->name,
             'username'=> $request->username,
             'email'=> $request->email,

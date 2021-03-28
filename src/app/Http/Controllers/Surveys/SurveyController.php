@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Surveys;
 
 use App\Models\Survey;
-use App\Models\ParticipantUser;
+use App\Models\User;
 
 use App\Models\AppendixO;
 use Illuminate\Http\Request;
@@ -157,7 +157,7 @@ class SurveyController extends Controller
 
         //TODO: query outside the loop, this is very slow
         for ($idx = 0; $idx < count($surveyUserList); $idx++) {
-            $surveyUserList[$idx] = ParticipantUser::where('id', $surveyUserList[$idx]->user_id)->first();
+            $surveyUserList[$idx] = User::where('id', $surveyUserList[$idx]->user_id)->first();
         }
         $survey->load('questions.answers');//lazy loading
         return view('survey.show',compact('survey', 'surveyUserList'));
@@ -168,7 +168,7 @@ class SurveyController extends Controller
         $isAdmin = Bouncer::is(Auth::user())->an('admin');
         $isParticipant = Bouncer::is(Auth::user())->an('participant');
         if(strcmp($this->checkUserPermissions($isAdmin, $isParticipant), 'participant') === 0) return redirect()->route('surveylisted');
-        $participants = ParticipantUser::all();
+        $participants = User::all();
         $survey = Survey::where('id', request()->surveyId)->first();
         return view('survey.createParticipants', ["participants"=>$participants, 'survey' => $survey]);
 

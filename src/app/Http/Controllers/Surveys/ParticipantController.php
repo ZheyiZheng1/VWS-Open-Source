@@ -18,13 +18,12 @@ class ParticipantController extends Controller
     public function __construct()
     {
         $this->middleware(['auth']);
-
-
     }
 
     public function checkUserPermissions() {
         $isAdmin = Bouncer::is(Auth::user())->an('admin');
-        $isParticipant = false;//Bouncer::is(Auth::user())->an('participant');
+        $isParticipant = Bouncer::is(Auth::user())->an('participant');
+
         //This if statement ultimately shouldn't exist as-is
         if ($isAdmin) {
             return 'admin';
@@ -53,7 +52,6 @@ class ParticipantController extends Controller
     public function availableSurveys(Request $request)
     {
         if(strcmp($this->checkUserPermissions(), 'admin') === 0) return redirect()->route('dashboard');
-
         $SurveyRetriever = SurveyRetriever::withEmptyConstructor();
         $completedSurveys = $SurveyRetriever->displaySurveyUserList();
 
