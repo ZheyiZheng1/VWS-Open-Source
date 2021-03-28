@@ -18,6 +18,14 @@ class SurveyUserList extends Model
         'updated_at',
         'isCompleted',
         'user_id',
-        'survey_id',
+        'survey_id'
     ];
+
+    public function SurveyUserList_GetList(){
+        return $this->belongsToMany('User');
+    }
+
+    public function Questions(){
+        return $this->hasMany(Qustions::class);
+    }
 }

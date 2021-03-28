@@ -19,5 +19,10 @@ class Questions extends Model
         'Description',
         'isAnsweredRepeatedly',
         'survey_lists_id',
+        'question_id'
     ];
+
+    public function Answers(){
+        return $this->hasMany(Answers::class);
+    }
 }

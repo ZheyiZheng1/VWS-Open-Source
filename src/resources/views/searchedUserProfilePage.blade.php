@@ -50,11 +50,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                <!--loop through all completed survey, one survey as on row in table-->
+                                    @foreach ($survey_datas_A as $survey_data_A)
                                     <tr>
-                                    @foreach ($survey_data as $user)
-                                        <p>This is user {{ $user->id }}</p>
-                                    @endforeach
+                                        <!--use survey_id and user_id to create link and load user answers-->
+                                        <td><a herf="{{ route('find_user_answer', [$data['id'], $survey_data_A->survey_id ]) }}">{{ $survey_data_A->survey_id }}</a></td>
+                                        <td><a herf="{{ route('find_user_answer', [$data['id'], $survey_data_A->survey_id ]) }}">{{ $survey_data_A->updated_at }}</a></td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -74,9 +77,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($survey_datas_B as $survey_data_B)
                                     <tr>
-                                        <td></td>
+                                        <td>{{ $survey_data_B->survey_id }}</td>
+                                        <td>{{ $survey_data_B->updated_at }}</td>
                                     </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

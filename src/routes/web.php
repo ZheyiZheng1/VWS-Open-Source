@@ -101,3 +101,6 @@ Route::post('/searchUserPage', [SearchController::class,'search']);
 
 Route::get('/searchedUserProfilePage/{id}', [SearchController::class,'showProfileData']);
 Route::post('/searchedUserProfilePage', [SearchController::class,'search']);
+
+Route::get('/specificAnswerPage/{id}/{survey_id}', [SearchController::class,'showAnswerData'])->name('find_user_answer');
+Route::post('/specificAnswerPage', [SearchController::class,'search']);
