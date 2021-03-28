@@ -75,6 +75,8 @@ Route::post('/dashboard/sampleSurvey', [SurveyController::class, 'store'])->name
 Route::get('/surveys/createSurvey', [SurveyController::class, 'createSurvey'])->name('createSurvey');
 Route::post('/surveys/createSurvey', [SurveyController::class, 'surveyStore'])->name('storeSurvey');
 Route::get('/surveys/{survey}',[SurveyController::class, 'show']);
+Route::get('/surveys/participants/create',[SurveyController::class, 'createParticipants'])->name('createParticipants');
+Route::post('/surveys/participants/create',[SurveyController::class, 'storeParticipants'])->name('createParticipantsStore');
 Route::get('/surveys/questions/create',[QuestionController::class, 'create']);
 Route::post('/surveys/questions',[QuestionController::class, 'store']);
 
