@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Surveys;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,9 +19,10 @@ class SearchController extends Controller
         //Search for correct participants' data and pass back to searchUserPage.
         $searchBar = Input::get ( 'searchBar' );
         $user = User::where('firstName','LIKE','%'.$searchBar.'%')->orWhere('lastName','LIKE','%'.$searchBar.'%')->orWhere('email','LIKE','%'.$searchBar.'%')->get();
+        dd($user);
         if(count($user) > 0)
             //$user and $searchBar will be send back as variable $details and $query
-            return view('searchUserPage')->withDetails($user)->withQuery ( $searchBar );
+            return view('searchUserPage')->withDetails($user)->withQuery($searchBar);
         else 
             return view ('searchUserPage')->withMessage('No such user found. Please try again !');
     }

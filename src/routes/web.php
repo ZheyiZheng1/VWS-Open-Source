@@ -18,6 +18,8 @@ use App\Http\Controllers\Surveys\ResearcherController;
 use App\Http\Controllers\Surveys\SocialEatingController;
 use App\Http\Controllers\Surveys\PatientHealthController;
 use App\Http\Controllers\Surveys\SocialWorkoutController;
+use App\Http\Controllers\Surveys\SearchController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
