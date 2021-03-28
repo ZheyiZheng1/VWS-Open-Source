@@ -32,7 +32,7 @@ class Questions extends Model
 
     public function surveys()
     {
-        return $this->belongsTo(Questionnaires::class);
+        return $this->belongsTo(Survey::class);
     }
 
     public function answers()

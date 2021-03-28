@@ -29,16 +29,16 @@
                                 <input name="question" type="text" class="form-control" id="question" placeholder="Enter Question"
                                 value="{{ old('question') }}">
 
-                                @error('question.question')
+                                @error('question')
                                     <small class="text-danger">{{$message}}</small>
                                 @enderror
                             </div>
                             <div class="form-group mb-2">
                                     <label for="question-type">Select question type</label>
                                     <select class="form-control" name="questionType" id="prefs" onchange="javascript:prefValue()">
-                                    <option value="radio">Multiple Choice</option>
-                                    <option value="text">Text/Number</option>
-                                    <option value="range">Likert Scale</option>
+                                    <option value="radio" @if (old('questionType') == "radio") {{ 'selected' }} @endif>Multiple Choice</option>
+                                    <option value="text" @if (old('questionType') == "text") {{ 'selected' }} @endif>Text/Number</option>
+                                    <option value="range" @if (old('questionType') == "range") {{ 'selected' }} @endif >Likert Scale</option>
                                     </select>
                             </div>
                             <div class="form-group mb-2 likert-choice" style="display: none;">

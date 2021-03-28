@@ -142,7 +142,6 @@ class SurveyController extends Controller
             'surveyName'=> 'required',
             'programdate'=> 'required|date'
         ]);
-            //dd($data);
 
         $survey= SurveyList::create([
             'SurveyName' => $data['surveyName'],
@@ -155,7 +154,7 @@ class SurveyController extends Controller
     public function show(Survey $survey)
     {
         $surveyUserList = SurveyUserList::where('survey_id', $survey->id)->get();
-        
+
         //TODO: query outside the loop, this is very slow
         for ($idx = 0; $idx < count($surveyUserList); $idx++) {
             $surveyUserList[$idx] = ParticipantUser::where('id', $surveyUserList[$idx]->user_id)->first();
