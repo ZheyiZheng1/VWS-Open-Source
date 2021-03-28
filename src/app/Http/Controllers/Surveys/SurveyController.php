@@ -139,7 +139,6 @@ class SurveyController extends Controller
             'surveyName'=> 'required',
             'programdate'=> 'required|date'
         ]);
-            //dd($data);
 
         $survey= SurveyList::create([
             'SurveyName' => $data['surveyName'],
@@ -151,6 +150,7 @@ class SurveyController extends Controller
 
     public function show(Survey $survey)
     {
+        $survey->load('questions.answers');//lazy loading
         return view('survey.show',compact('survey'));
     }
 

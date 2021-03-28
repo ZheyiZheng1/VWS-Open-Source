@@ -9,30 +9,27 @@ class QuestionController extends Controller
 {
     public function create(Request $request)
     {
-        // dd($request);
         $survey = Survey::where('id', request()->surveyId)->first();
 
         return view('survey.question.create',compact('survey'));
     }
     public function store(Survey $survey, Request $request)
     {
-        // dd($request->answers);
         $survey = Survey::where('id', request()->surveyId)->first();
-        // $data = request()->validate([
-        //     'question.question'=>'required',
-        //     'question.type'=>'required',
-        //     'answer.answerValue'=>'required',
-        //     'answers.*.answerValue'=>'required'
-        // ]);
-        // dd($data);
+        $this->validate($request,[
+                'question'=>'required',
+                'questionType'=>'required',
+                'likertScaleAnswer'=>'required_if:questionType,range',
+                'textChoice'=>'required_if:questionType,text',
+                'choiceOne'=>'required_if:questionType,radio',
+                'choiceTwo'=>'required_if:questionType,radio'
+        ]);
         $type= $request->questionType;
-        // dd($type)
-        $singleAnswer= $request->likertScaleAnswer;
-        // dd($survey->questions());
+        $singleAnswer = $request->likertScaleAnswer;
         $question = $survey->questions()->create([
             'question' => $request->question,
             'type' => $request->questionType
-        ]); //question is created in db
+        ]);
         if($type === 'radio')
         {
             $question->answers()->createMany([['answerValue' => $request->choiceOne], ['answerValue' => $request->choiceTwo]]);
@@ -46,8 +43,12 @@ class QuestionController extends Controller
         {
             $question->answers()->create(['answerValue' => $request->textChoice]);
         }
-
-
         return redirect('surveys/'.$request->surveyId); //redirect back to the survey
+    }
+
+    public function show(Survey $survey)
+    {
+        $survey->load('questions');//lazy loading
+        return view('survey.show',compact('survey'));
     }
 }

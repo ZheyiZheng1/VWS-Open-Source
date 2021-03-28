@@ -26,16 +26,24 @@
                         <a class="btn btn-dark" href="#">Add a Participant</a>
                     </div>
                     @foreach ($survey->questions as $question)
-                    <div>
-                        <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900">
-                            {{$question->question}}
-                            </h3>
-                            <!-- This example requires Tailwind CSS v2.0+ -->
-                            <ul class="divide-y divide-gray-200">
+                    <div class="">
+                        <div class="mt-4">
+                            <div class="d-flex flex-row justify-content-between">
+                                <h5 class="">{{$question->question}}</h5>
+                                    @if ($question->type === 'radio')
+                                        <p>Multiple Choice</p>
+                                    @endif
+                                    @if ($question->type === 'text')
+                                        <p>Text Field</p>
+                                    @endif
+                                    @if ($question->type === 'range')
+                                        <p>Likert Scale</p>
+                                    @endif
+                            </div>
+                            <ul class="list-group" style="list-style-type:none">
                                 @foreach ($question->answers as $answer)
-                                <li class="py-4 flex">
-                                    {{$answer->answer}}
+                                <li class="ml-2">
+                                    {{$answer->answerValue}}
                                 </li>
                                 @endforeach
                             </ul>
