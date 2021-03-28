@@ -27,10 +27,10 @@
             <h1>Good Morning Researcher,</h1>
             <br>
             <!--Form for text bar and "search for a patient" button-->
-            <form id='surveyForm' action="/search" method="post">
-                {{ csrf_field() }}
+            <form id='surveyForm' action="/dashboard/searchUserPage" method="post">
+                {{ @csrf_field() }}
                 <input type='text' id='searchBar' name='searchBar' placeholder='Please enter an user name.'>
-                <button type="submit" class="btn btn-primary" style="width: 150px;">Search For a Patient</button>
+                <button type="submit" class="btn btn-primary" style="width: 150px;">Search For a participant</button>
             </form>
             <br>
             <!--Table for search results-->
@@ -41,19 +41,19 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
+                            <th>Name</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($details as $user)
+                        <form action="/dashboard/searchedUserProfilePage?id={{$user->id}}" method="POST" >
+                        {{ @csrf_field() }}
                         <tr>
                             <!-- '$loop->index' The index of the current loop iteration (starts at 0 and only avilable inside the loop).-->
                             <td>{{$loop->index}}</td>
-                            <!-- if the table only contain name instead of firstName lastName, pass value to php and break into two strings.-->
-                            <td><a herf='/searchedUserProfilePage/{{$user->userId}}'>{{$user->firstName}}</a></td>
-                            <td><a herf='/searchedUserProfilePage/{{$user->userId}}'>{{$user->lastName}}</a></td>
+                            <td><button type="submit">{{$user->name}}</button></td>
                         </tr>
+                        </form>
                         @endforeach
                     </tbody>
                 </table>
@@ -63,7 +63,7 @@
         </section>
     </div>
 
-    
+
 </body>
 
 </html>

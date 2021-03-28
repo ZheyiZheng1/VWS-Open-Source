@@ -18,6 +18,8 @@ use App\Http\Controllers\Surveys\ResearcherController;
 use App\Http\Controllers\Surveys\SocialEatingController;
 use App\Http\Controllers\Surveys\PatientHealthController;
 use App\Http\Controllers\Surveys\SocialWorkoutController;
+use App\Http\Controllers\Surveys\SearchController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -115,8 +117,11 @@ Route::post('/userProfilePage',[LoginController::class, 'updateProfile']);
 
 Route::get('/logoutSuccessPage', function(){return view('logoutSuccessPage');});
 
-Route::get('/searchUserPage', [SearchController::class,'index']);
-Route::post('/searchUserPage', [SearchController::class,'search']);
+Route::get('/dashboard/searchUserPage', [SearchController::class,'index'])->name('searchUsers');
+Route::post('/dashboard/searchUserPage', [SearchController::class,'search'])->name('searchForUser');
 
-Route::get('/searchedUserProfilePage/{id}', [SearchController::class,'showProfileData']);
-Route::post('/searchedUserProfilePage', [SearchController::class,'search']);
+Route::post('/dashboard/searchedUserProfilePage', [SearchController::class,'showProfileData'])->name('showIndividualProfile');
+// Route::post('/searchedUserProfilePage', [SearchController::class,'search']);
+
+Route::get('/specificAnswerPage/{id}/{survey_id}', [SearchController::class,'showAnswerData'])->name('find_user_answer');
+Route::post('/specificAnswerPage', [SearchController::class,'search']);
