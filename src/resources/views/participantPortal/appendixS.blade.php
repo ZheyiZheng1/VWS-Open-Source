@@ -22,7 +22,7 @@
         @show
 
         <section class="right-panel" >
-            <form id='surveyForm' action="{{ route('AppendixS') }}" method="post">
+            <form id='surveyForm' action="/participant-portal/available-surveys/index.html?SurveyList={{ $questions[0]->survey_id }}" method="post">
                 @section('surveyAppendixS')
                     @include('participantPortal.surveys.surveyAppendixS')
                 @show
