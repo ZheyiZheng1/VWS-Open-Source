@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Questions;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,13 @@ class QuestionController extends Controller
             $question->answers()->create(['answerValue' => $request->textChoice]);
         }
         return redirect('surveys/'.$request->surveyId); //redirect back to the survey
+    }
+
+    public function delete(Survey $survey, Questions $question)
+    {
+        $question->answers()->delete();
+        $question->delete();
+        return redirect('surveys/'.$survey->id)->with('alert', 'Question Deleted!');
     }
 
     public function show(Survey $survey)

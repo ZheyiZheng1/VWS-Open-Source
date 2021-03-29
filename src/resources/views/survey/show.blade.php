@@ -22,6 +22,11 @@
                 <a class="btn btn-dark" href="/surveys/participants/create?surveyId={{ $survey->id }}">Add a Participant</a>
             </div>
             <div class="survey-create card mt-4">
+                    @if (session('alert'))
+                        <div class="alert alert-success my-2">
+                            {{ session('alert') }}
+                        </div>
+                    @endif
                 <div class="card-header">Questions</div>
                     <div class="card-body">
                         @foreach ($survey->questions as $question)
@@ -48,7 +53,8 @@
                                     </ul>
                                 </div>
                                 <div class="card-footer">
-                                    <form action="" method="post">
+                                    <form action="/surveys/{{$survey->id}}/questions/{{$question->id}}" method="post">
+                                        @method('DELETE')
                                         @csrf
                                         <button class="btn btn-small btn-outline-danger" type="submit">Remove Question</button>
                                     </form>
@@ -69,5 +75,12 @@
                 </div>
         </section>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(".alert").delay(2000).slideUp(200, function () {
+            $(this).alert('close');
+        });
+    </script>
 </body>
 </html>
