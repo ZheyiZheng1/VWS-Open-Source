@@ -53,7 +53,7 @@ class ParticipantController extends Controller
     }
 
     public function storeNewSurvey(Request $request) {
-        // dd($request);
+
         for ($idx = 0; $idx < 10; $idx++) {
             if ($request["answer" . $idx]) {
                 $surveyComplete = AnswersRecorded::create([

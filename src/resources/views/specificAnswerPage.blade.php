@@ -30,8 +30,6 @@
                 <div class="card-body">
                     <!--update the link for generate survey and generate report-->
                     <h5 class="card-title">{{ $user->name }}</h5>
-                    <a href="#" class="card-link">Generate Survey</a>
-                    <a href="#" class="card-link">Generate Report</a>
                 </div>
             </div>
 
