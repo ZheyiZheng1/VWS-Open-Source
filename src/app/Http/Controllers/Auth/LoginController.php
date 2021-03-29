@@ -33,7 +33,7 @@ class LoginController extends Controller
             return back()->with('status', 'Invalid login details');
         }
 
-        // $isAdmin = Bouncer::is(Auth::user())->an('admin');
+        $isAdmin = Bouncer::is(Auth::user())->an('admin');
         $isParticipant = Bouncer::is(Auth::user())->an('participant');
         //This if statement ultimately shouldn't exist as-is
         if ($isAdmin) {

@@ -31,6 +31,7 @@ use App\Http\Controllers\Surveys\SearchController;
 |
 */
 
+Route::get('/', [LoginController::class, 'index'])->name('roothome');
 Route::get('/home', [LoginController::class, 'index'])->name('home');
 Route::get('/about', [GeneralWebsiteController::class, 'about'])->name('about');
 

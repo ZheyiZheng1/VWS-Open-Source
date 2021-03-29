@@ -40,6 +40,7 @@
 
                 <div style="display: flex; flex-direction: column; align-items: center;">
                     <p class>Don't have an account? <a href="{{route('registerresearcher')}}">Sign Up As Researcher</a> </p>
+                    <p class>Are you a participant? <a href="{{route('login')}}">Login here</a> </p>
                 </div>
             </form>
     </div>
