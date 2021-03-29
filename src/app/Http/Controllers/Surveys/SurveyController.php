@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\Surveys;
 
-use App\Models\Survey;
+use Bouncer;
 use App\Models\User;
 
+use App\Models\Survey;
 use App\Models\AppendixO;
+
+use App\Models\SurveyList;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Surveys\SurveyBuilder\DistributeSurvey;
+use App\Models\SurveyUserList;
+use Illuminate\Support\Facades\DB;
 
+
+use Illuminate\Pagination\Paginator;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Surveys\SurveyClass\SurveyRetriever;
-use App\Models\SurveyList;
-use App\Models\SurveyUserList;
+use App\Http\Controllers\Surveys\SurveyBuilder\DistributeSurvey;
 
-use Bouncer;
 class SurveyController extends Controller
 {
     public function __construct()
@@ -153,13 +157,17 @@ class SurveyController extends Controller
 
     public function show(Survey $survey)
     {
-        $surveyUserList = SurveyUserList::where('survey_id', $survey->id)->get();
 
-        //TODO: query outside the loop, this is very slow
-        for ($idx = 0; $idx < count($surveyUserList); $idx++) {
-            $surveyUserList[$idx] = User::where('id', $surveyUserList[$idx]->user_id)->first();
-        }
+        $surveyID=$survey->id;
+        $surveyUserList= DB::table('users')
+                ->whereExists(function ($query) use($surveyID){
+                    $query->from('survey_user_lists')
+                        ->whereColumn('survey_user_lists.user_id','users.id')
+                        ->where('survey_id',$surveyID);
+                })->paginate(5);
+
         $survey->load('questions.answers');//lazy loading
+        //$survey = Paginator::make($survey, count($survey), 5);
         return view('survey.show',compact('survey', 'surveyUserList'));
     }
 

@@ -82,6 +82,7 @@ Route::get('/surveys/participants/create',[SurveyController::class, 'createParti
 Route::post('/surveys/participants/create',[SurveyController::class, 'storeParticipants'])->name('createParticipantsStore');
 Route::get('/surveys/questions/create',[QuestionController::class, 'create']);
 Route::post('/surveys/questions',[QuestionController::class, 'store']);
+Route::delete('/surveys/{survey}/questions/{question}',[QuestionController::class, 'delete']);
 
 Route::get('/dashboard/researchSurvey', [SurveyController::class, 'researchSurvey'])->name('researchSurvey');
 Route::get('/dashboard/distributeSurvey', [SurveyController::class, 'showDistributeSurvey'])->name('DistributeSurveyIndex');
