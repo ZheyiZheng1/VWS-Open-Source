@@ -29,8 +29,8 @@
             <!--Form for text bar and "search for a patient" button-->
             <form id='surveyForm' action="/dashboard/searchUserPage" method="post">
                 {{ @csrf_field() }}
-                <input type='text' id='searchBar' name='searchBar' placeholder='Please enter an user name.'>
-                <button type="submit" class="btn btn-primary" style="width: 150px;">Search For a participant</button>
+                <input type='text' id='searchBar' name='searchBar' placeholder='Please enter an user name.' style="width: 300px;">
+                <button type="submit" class="btn btn-primary" style="width: 200px;">Search For a participant</button>
             </form>
             <br>
             <!--Table for search results-->

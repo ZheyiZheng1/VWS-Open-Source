@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/dashboard/index.css" />
     <link rel="stylesheet" href="/css/dashboard/sidebar.css" />
     <link rel="stylesheet" href="/css/dashboard/surveyrightbar.css" />
-    <title>{{$survey -> title}}</title>
+    <title>{{$survey -> SurveyName}}</title>
 </head>
 <body>
     <div class="main">
@@ -27,7 +27,8 @@
                             {{ session('alert') }}
                         </div>
                     @endif
-                <div class="card-header">Questions</div>
+
+                <div class="card-header">Here are the questions for {{$survey->SurveyName}}</div>
                     <div class="card-body">
                         @foreach ($survey->questions as $question)
                             <div class="mt-2 card">

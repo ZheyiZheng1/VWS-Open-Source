@@ -30,7 +30,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
                         <th scope="col">Surveys</th>
                         <th scope="col">Responses</th>
                         <th scope="col">Completion Rate</th>
@@ -42,7 +41,6 @@
 
                 @foreach($SurveysAvailable as $Survey)
                     <tr>
-                         <th scope="row">1</th>
                          <td>{{ $Survey['SurveyName'] }}</td>
                          <td>0</td>
                          <td>0%</td>

@@ -45,10 +45,10 @@
             </div>
         </div>
 
-        <div class="incomplete">
+        <div class="incomplete mt-2">
             <h2>Not Completed Surveys</h2>
             @foreach($SurveysAvailable as $Survey)
-            <div class="incompleteRow">
+            <div class="incompleteRow mt-2">
                 <div class="col-sm-6">
                     <div class="card">
                         <div class="card-body">
