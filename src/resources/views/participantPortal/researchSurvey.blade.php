@@ -22,7 +22,7 @@
         @show
 
         <section class="right-panel" >
-        <h1>Good Morning Researcher,</h1>
+        <h1>Good Morning {{auth()->user()->name}},</h1>
         <br>
         <p>Here are a list of Surveys available</p>
         <table class="table">

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\models\User;
 use App\models\Questions;
 use App\models\AnswersRecorded;
+use App\Models\SurveyList;
 use App\models\SurveyUserList;
 use Illuminate\Support\Facades\Auth;
 class SearchController extends Controller
@@ -38,7 +39,14 @@ class SearchController extends Controller
         $survey_datas_A = SurveyUserList::where(['isCompleted' => true, 'user_id' => $request->id])->get();
         //find all survey that related to this user and not completed, save to survey_datas_B.
         $survey_datas_B = SurveyUserList::where(['isCompleted' => false, 'user_id' => $request->id])->get();
-        return view('dashboard/searchedUserProfilePage', compact('user_id', 'survey_datas_A', 'survey_datas_B'));
+        $surveyA = SurveyList::where('id',$survey_datas_A[0]->id)->get();
+        $surveyB = '';
+        if(!$survey_datas_B->isEmpty())
+        {
+            $surveyB = SurveyList::where('id',$survey_datas_B[0]->id)->get();
+        }
+       // dd($surveyB);
+        return view('dashboard/searchedUserProfilePage', compact('user_id', 'survey_datas_A', 'survey_datas_B','surveyA','surveyB'));
     }
 
     public function showAnswerData(Request $request){

@@ -22,7 +22,7 @@
         @show
 
         <section class="right-panel">
-        <h2>Good Morning Researcher,</h2>
+        <h2>Good Morning {{auth()->user()->name}},</h2>
         <br>
         <p>Here are a list of Surveys available</p>
         <div class="ml-auto"><a href="{{route('createSurvey')}}" class="btn btn-success" style="width: 250px;">Create New Survey</a></div>

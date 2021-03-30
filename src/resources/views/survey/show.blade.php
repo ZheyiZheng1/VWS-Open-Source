@@ -16,7 +16,7 @@
             @include('dashboard.leftsidebar')
         @show
         <section class="right-panel">
-            <h2>Good Morning Researcher,</h2>
+            <h2>Good Morning {{auth()->user()->name}},</h2>
             <div>
                 <a class="btn btn-dark" href="/surveys/questions/create?surveyId={{ $survey->id }}">Add New Question</a>
                 <a class="btn btn-dark" href="/surveys/participants/create?surveyId={{ $survey->id }}">Add a Participant</a>

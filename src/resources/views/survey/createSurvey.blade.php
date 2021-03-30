@@ -16,7 +16,7 @@
             @include('dashboard.leftsidebar')
         @show
         <section class="right-panel">
-            <h2>Good Morning Researcher,</h2>
+            <h2>Good Morning {{auth()->user()->name}},</h2>
             <div class="survey-create card mt-4" >
                 <div class="card-body">
                     <form action="{{route('storeSurvey')}}" method="post">
@@ -40,7 +40,7 @@
 
                         <div class="form-group mb-4">
                             <label for="quarterly">How frequently should this be sent</label>
-                            <input name="quarterly" type="text" class="form-control" id="quarterly" placeholder="Enter Purpose">
+                            <input name="quarterly" type="text" class="form-control" id="quarterly">
                             @error('quarterly')
                             <small class="text-danger">{{$message}}</small>
                             @enderror
