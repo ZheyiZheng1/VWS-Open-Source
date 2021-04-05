@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/css/dashboard/index.css" />
     <link rel="stylesheet" href="/css/dashboard/sidebar.css" />
     <link rel="stylesheet" href="/css/dashboard/surveyrightbar.css" />
-    <title>{{$survey -> title}}</title>
+    <title>{{$survey -> SurveyName}}</title>
 </head>
 <body>
     <div class="main">
@@ -16,7 +16,7 @@
             @include('dashboard.leftsidebar')
         @show
         <section class="right-panel">
-            <h2>Good Morning Researcher,</h2>
+            <h2>Good Morning {{auth()->user()->name}},</h2>
             <div>
                 <a class="btn btn-dark" href="/surveys/questions/create?surveyId={{ $survey->id }}">Add New Question</a>
                 <a class="btn btn-dark" href="/surveys/participants/create?surveyId={{ $survey->id }}">Add a Participant</a>
@@ -27,7 +27,8 @@
                             {{ session('alert') }}
                         </div>
                     @endif
-                <div class="card-header">Questions</div>
+
+                <div class="card-header">Here are the questions for {{$survey->SurveyName}}</div>
                     <div class="card-body">
                         @foreach ($survey->questions as $question)
                             <div class="mt-2 card">

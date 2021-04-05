@@ -4,7 +4,7 @@
 <!--not sure which action to use-->
     <!-- THIS IS ASKED PERIODICALLY -->
 	<div class="survey-title">
-        <h2>Appendix S: Work Productivity And Activity Impairment Questionnaire General Health (WPAI-GH)</h2>
+        <h2>{{$survey[0]->SurveyName}}</h2>
     </div>
 
 	<div class='survey'>

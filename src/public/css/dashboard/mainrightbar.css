@@ -1,0 +1,41 @@
+
+section.right-panel {
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.left-panel{
+    width: 20vw;
+}
+
+.survey-title {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.bar-center {
+    display: flex;
+}
+
+.bar-center-img {
+    margin-left: 30px;
+}
+
+.survey {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 90%;
+}
+
+.survey > .mb-3 {
+    width: 80%;
+}
+
+#gender{
+    display: flex;
+}

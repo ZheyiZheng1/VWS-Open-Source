@@ -93,12 +93,12 @@ Route::get('/dashboard/sampleSurvey', [ResearcherController::class, 'index'])->n
 Route::post('/dashboard/sampleSurvey', [ResearcherController::class, 'store'])->name('SampleSurveystore');
 
 Route::get('/dashboard/surveyAssigning', [ResearcherController::class, 'surveyAssigning'])->name('surveyAssigning');
-Route::get('/dashboard/researchSurvey', [ResearcherController::class, 'researchSurvey'])->name('researchSurvey');
+Route::get('/surveys', [ResearcherController::class, 'researchSurvey'])->name('researchSurvey');
 Route::get('/dashboard/distributeSurvey', [ResearcherController::class, 'showDistributeSurvey'])->name('DistributeSurveyIndex');
 Route::post('/dashboard/distributeSurvey', [ResearcherController::class, 'DistributeSurveyStore'])->name('DistributeSurveyStore');
 
 Route::post('/logout', [LogoutController::class, 'store'])->name('logout');
-Route::get('/logout', [LogoutController::class, 'index'])->name('logout');
+//Route::get('/logout', [LogoutController::class, 'index'])->name('logout');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'store'])->name('login');
@@ -119,8 +119,8 @@ Route::post('/userProfilePage',[LoginController::class, 'updateProfile']);
 
 Route::get('/logoutSuccessPage', function(){return view('logoutSuccessPage');});
 
-Route::get('/dashboard/searchUserPage', [SearchController::class,'index'])->name('searchUsers');
-Route::post('/dashboard/searchUserPage', [SearchController::class,'search'])->name('searchForUser');
+Route::get('/dashboard/searchUserProfilePage', [SearchController::class,'index'])->name('searchUsers');
+Route::post('/dashboard/searchUserProfilePage', [SearchController::class,'search'])->name('searchForUser');
 
 Route::post('/dashboard/searchedUserProfilePage', [SearchController::class,'showProfileData'])->name('showIndividualProfile');
 // Route::post('/searchedUserProfilePage', [SearchController::class,'search']);

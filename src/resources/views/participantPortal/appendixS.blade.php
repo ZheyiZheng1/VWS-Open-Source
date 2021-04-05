@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="/css/dashboard/surveyrightbar.css" />
 
 	<script src="https://kit.fontawesome.com/555936ed9c.js" crossorigin="anonymous"></script>
-    <title>Appendix S Survey</title>
+    <title>{{$survey[0]->SurveyName}}</title>
 
 </head>
 
