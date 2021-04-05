@@ -112,7 +112,7 @@ Route::post('/loginresearcher', [LoginController::class, 'storeresearcher']);
 Route::get('/registerresearcher', [RegisterController::class, 'indexresearcher'])->name('registerresearcher');
 Route::post('/registerresearcher', [RegisterController::class, 'storeresearcher']);
 
-Route::get('/userProfilePage/{id}', [LoginController::class, 'showProfileData']);
+Route::get('/userProfilePage/{id}', [LoginController::class, 'showProfileData'])->name('userProfile');
 Route::post('/userProfilePage',[LoginController::class, 'updateProfile']);
 
 Route::get('/logoutSuccessPage', function(){return view('logoutSuccessPage');});

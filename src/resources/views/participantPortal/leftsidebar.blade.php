@@ -8,6 +8,7 @@
             <li class="list-group-item"><a>Survey</a></li>
             <li class="list-group-item"><a>Forums</a></li>
             <li class="list-group-item"><a>Messages</a></li>
+            <li class="list-group-item"><a href ="/userProfilePage/{{ auth()->user()->id }}">Profile Page</a></li>
             @auth
             <li class="list-group-item">
                 <a href="" class="p-3">{{ auth()->user()->name }}</a>
