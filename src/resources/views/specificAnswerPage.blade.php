@@ -29,7 +29,7 @@
             <div class="card">
                 <div class="card-body">
                     <!--update the link for generate survey and generate report-->
-                    <h5 class="card-title">{{$data['name']}}</h5>
+                    <h5 class="card-title">{{ $user->name }}</h5>
                     <a href="#" class="card-link">Generate Survey</a>
                     <a href="#" class="card-link">Generate Report</a>
                 </div>
@@ -48,18 +48,18 @@
                         <!--show all questions and answers, for each pair question and answer, create a new row for table-->
                             @for ($i = 0; $i< count($questions); $i++)
                             <tr>
-                                <td>{{ $questions[$i] }}</td>
-                                <td>{{ $answers[$i] }}</td>
+                                <td>{{ $questions_alt[$i]->question }}</td>
+                                <td>{{ $questions[$i][0]->answerValue }}</td>
                             </tr>
                             @endfor
                         </tbody>
-                </table>    
+                </table>
                 </div>
             </div>
         </section>
     </div>
 
-    
+
 </body>
 
 </html>
