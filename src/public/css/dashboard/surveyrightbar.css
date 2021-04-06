@@ -9,6 +9,15 @@ section.right-panel {
     padding-right: 10%;
     overflow: scroll;
 }
+
+@media screen and (max-width: 768px) {
+
+    section.right-panel {
+        overflow: inherit;
+        padding-left: 2.5%;
+        padding-right: 2.5%;
+    }
+}
 .left-panel{
     width: 20vw;
 }

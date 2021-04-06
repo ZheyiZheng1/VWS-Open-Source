@@ -9,62 +9,127 @@ section.left-panel {
     background-color: #EAEAEA;
 }
 
-.vws-title{
-    margin-bottom:50%;
+@media screen and (max-width: 768px) {
+
+    .vws-title {
+        display: none;
+    }
 }
 
-.upei-logo{
-    margin-top:100px;
-}
-.left-panel .nav-link{
-    padding: 20px 20px;
-}
+@media screen and (max-width: 768px) {
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-    color: #fff;
-    background-color: #6D9D70;
-}
+    section.left-panel {
+        display: block;
+        height: 60px;
+        width: 100%;
+    }
 
-.nav-fill .nav-item{
-    text-align: left;
 }
-.nav-item a{
-    color: #252323;
-    padding-left: 105px!important;
-    padding-right: 50px!important;
-}
-
 .wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    /*margin-bottom: 50%;*/
+    margin-top: 50%;
+    margin-bottom: 50%;
+    background-color: #EAEAEA;
 }
 
-.wrapper > .list-group {
+@media screen and (max-width: 768px) {
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        width: 100%;
+        margin-top: initial;
+        margin-bottom: initial;
+    }
+}
+.wrapper > ul.list-group {
     width: 100%;
 }
 
-.wrapper > .list-group > .list-group-item {
+@media screen and (max-width: 768px) {
+
+
+    .wrapper > ul.list-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+}
+.wrapper > ul.list-group > li.list-group-item {
     width: 100%;
-    height: 60px;
+    padding: 0 0;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #EAEAEA;
+    border: none;
 }
-.wrapper > .list-group > .list-group-item > a {
-    width: 135px;
+@media screen and (max-width: 768px) {
+    .wrapper > ul.list-group > li.list-group-item {
+        display: flex;
+        width: fit-content;
+    }
+}
+.wrapper > ul.list-group > .list-group-item > a {
+    width: 80px;
+    font-size: 0.7rem;
+    color: #000;
     display: flex;
-    justify-content: flex-start;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
 }
-.wrapper > .list-group > .active {
+
+@media screen and (min-width: 768px) {
+    .wrapper > ul.list-group > .list-group-item > a {
+        width: 100%;
+    }
+}
+.wrapper > ul.list-group > .list-group-item > a.active {
     background-color: #6D9D70;
+    color: #EAEAEA;
+    height: 100%;
+    width: 80px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
 }
+@media screen and (min-width: 768px) {
+    .wrapper > ul.list-group > .list-group-item > a.active {
+        width: 100%;
+    }
+}
+.wrapper > ul.list-group > .list-group-item > a.disabled {
+    background-color: #EAEAEA;
+    text-decoration: none;
+    color: #252323;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
 .left-panel-logo {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .upei-logo {
+    display: none;
+    }
 }
