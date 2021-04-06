@@ -2,24 +2,24 @@ version: '3'
 
 services:
   #Nginx Service
-  webserver:
-    image: nginx:stable-alpine
-    container_name: webserver
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "3001:80"
-    volumes:
-      - ./src:/var/www
-      - ./nginx/:/etc/nginx/conf.d/
+  apache:
+    build:
+      context: .
+      dockerfile: apache.dockerfile
     depends_on:
       - app
+      - appmysql
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/:/var/www/
+    container_name: apache
   app:
     build:
       context: .
       dockerfile: php.dockerfile
     image: digitalocean.com/php
-    container_name: app
+    container_name: php
     restart: unless-stopped
     tty: true
     depends_on: 
