@@ -23,21 +23,19 @@
             @include('dashboard.leftsidebar')
         @show
 
-        <section class="right-panel" >
-            <h1>Good Morning Researcher,</h1>
+        <section class="right-panel">
+            <h1>Good Morning {{auth()->user()->name}},</h1>
             <br>
             <div class="card">
                 <div class="card-body">
                     <!--update the link for generate survey and generate report-->
                     <h5 class="card-title">{{$user_id[0]->name}}</h5>
-                    <a href="#" class="card-link">Generate Survey</a>
-                    <a href="#" class="card-link">Generate Report</a>
                 </div>
             </div>
 
             <div class="container">
-                <div class="row"><!--make sure these two columns are in same row-->
-                    <div class="col-sm-4"><!--define the size of columns-->
+                <div class="row justify-content-between"><!--make sure these two columns are in same row-->
+                    <div class="col-6"><!--define the size of columns-->
                     <div class="card"><!--create card inside column-->
                         <div class="card-body">
                             <h5 class="card-title">Completed Surveys</h5>
@@ -54,7 +52,7 @@
                                     @foreach ($survey_datas_A as $survey_data_A)
                                     <tr>
                                         <!--use survey_id and user_id to create link and load user answers-->
-                                        <td><a href="{{ route('find_user_answer', ['id' => $user_id[0]->name, 'survey_id' => $survey_data_A->survey_id ]) }}">{{ $survey_data_A->survey_id }}</a></td>
+                                        <td><a href="{{ route('find_user_answer', ['id' => $user_id[0]->name, 'survey_id' => $survey_data_A->survey_id ]) }}">{{$survey_data_A->survey_id}}</a></td>
                                         <td><a href="{{ route('find_user_answer', [$user_id[0]->name, $survey_data_A->survey_id ]) }}">{{ $survey_data_A->updated_at }}</a></td>
                                     </tr>
                                     @endforeach
@@ -64,7 +62,7 @@
                     </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-6">
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">Not Completed Surveys</h5>

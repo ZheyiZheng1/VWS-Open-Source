@@ -4,7 +4,7 @@
 <!--not sure which action to use-->
     <!-- THIS IS ASKED PERIODICALLY -->
 	<div class="survey-title">
-        <h2>Appendix S: Work Productivity And Activity Impairment Questionnaire General Health (WPAI-GH)</h2>
+        <h2>{{$survey[0]->SurveyName}}</h2>
     </div>
 
 	<div class='survey'>
@@ -39,13 +39,12 @@
 			</div>
 			@endif
 			@if($question->type === 'range')
-				<div class="mb-3 question range-slider" id='question1'>
-					<label for="customRange1" class="form-label"> {{ $questions[$loop->index]->question }}</label>
-					<input type="range" class="range-slider__range" min="1" max="5" step="1"   name="answer{{$loop->index}}" value="{{$answers[$loop->index][0]->answerValue}}" id="customRange1" onchange="updateQuestion(1)">
-					<span class="range-slider__value">5</span>
-                    <input type="hidden" value="{{$questions[$loop->index]->id }}" name="questionNumber{{$loop->index}}" />
-
-				</div>
+                <div class="mb-3 question range-slider" id='question1'>
+                    <label for="customRange1" class="form-label"> {{ $questions[$loop->index]->question }}</label>
+                    <input name="answer{{$loop->index}}" type="range" class="range-slider__range form-range" min="1" max="{{$answers[$loop->index][0]->answerValue }}" value="{{$answers[$loop->index][0]->answerValue }}" step="1" id="customRange1" onchange="updateQuestion(0)">
+                    <span class="range-slider__value output">{{ $questions[$loop->index]->id }}</span>
+                </div>
+                <input type="hidden" value="{{$questions[$loop->index]->id }}" name="questionNumber{{$loop->index}}" />
 			@endif
 		@endforeach
 	</div>
@@ -76,5 +75,24 @@
 			document.getElementById("questionFive").readOnly = false;
 			document.getElementById("questionFourHour").readOnly = false;
 		}
-	</script>
+
+        let getAllQuestions = document.querySelectorAll('.question');
+        console.log(getAllQuestions);
+
+        for (let i = 0; i < getAllQuestions.length; i++) {
+            let outputDiv = getAllQuestions[i].querySelector('.output');
+            let currentLikertValue = getAllQuestions[i].querySelector('.form-range').value;
+            outputDiv.innerText = currentLikertValue;
+        }
+
+        function updateQuestion(questionNum) {
+            let getAllQuestions = document.querySelectorAll('.question');
+            let outputDiv = getAllQuestions[questionNum];
+            console.log(outputDiv);
+            let inlineElement = outputDiv.querySelector('.output');
+            let currentLikertValue = getAllQuestions[questionNum].querySelector('.form-range').value;
+            inlineElement.innerText = currentLikertValue;
+        }
+
+    </script>
 @endsection('surveyAppendixS')

@@ -24,14 +24,12 @@
         @show
 
         <section class="right-panel" >
-            <h1>Good Morning Researcher,</h1>
+            <h1>Good Morning {{auth()->user()->name}},</h1>
             <br>
             <div class="card">
                 <div class="card-body">
                     <!--update the link for generate survey and generate report-->
                     <h5 class="card-title">{{ $user->name }}</h5>
-                    <a href="#" class="card-link">Generate Survey</a>
-                    <a href="#" class="card-link">Generate Report</a>
                 </div>
             </div>
 

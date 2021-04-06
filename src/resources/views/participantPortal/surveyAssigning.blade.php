@@ -22,13 +22,11 @@
         @show
 
         <section class="right-panel" >
-        <h1>Good Morning Researcher</h1>
+        <h1>Good Morning {{auth()->user()->name}},</h1>
         <br>
         <div class="surveyDescription">
             <h2>Appendix R - Survey</h2>
             <p>Survey Discription</p>
-            <a href="#">Generate Survey</a>
-            <a href="#">Generate Report</a>
         </div>
 
         <div class="completedSurvey">
@@ -69,8 +67,8 @@
 
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
             <script>
-            
-            
+
+
 
             </script>
         </div>

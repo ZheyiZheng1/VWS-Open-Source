@@ -42,18 +42,19 @@ class ParticipantController extends Controller
     public function index(Request $request)
     {
         if(strcmp($this->checkUserPermissions(), 'admin') === 0) return redirect()->route('dashboard');
-
+        $survey=SurveyList::where('id', $request->SurveyList)->get();
         $questions = Questions::where('survey_id', $request->SurveyList)->get();
+       // dd($survey);
         $answers = [];
         foreach ($questions as $question) {
             $answers[] = Answers::where('questions_id', $question->id)->get();
 
         }
-        return view('participantPortal/appendixS', compact('questions', 'answers'));
+        return view('participantPortal/appendixS', compact('questions', 'answers','survey'));
     }
 
     public function storeNewSurvey(Request $request) {
-        // dd($request);
+
         for ($idx = 0; $idx < 10; $idx++) {
             if ($request["answer" . $idx]) {
                 $surveyComplete = AnswersRecorded::create([

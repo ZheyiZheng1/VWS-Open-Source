@@ -16,7 +16,7 @@
             @include('dashboard.leftsidebar')
         @show
         <section class="right-panel">
-            <h2>Good Morning Researcher,</h2>
+            <h2>Good Morning {{auth()->user()->name}},</h2>
             <form action="/surveys/questions?surveyId={{$survey->id}}" method="POST">
                 <div class="survey-create card mt-4" id="question1">
                     <div class="card-header">
