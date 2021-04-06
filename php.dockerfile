@@ -43,4 +43,4 @@ COPY ./src/ /var/www/
 # USER www
 
 ENTRYPOINT [ "./appstart.sh" ]
-cmd["php-fpm"]
+CMD [ "php-fpm" ]
