@@ -2,9 +2,16 @@
 <section class="left-panel">
     <div class="vws-title"><h2>VWS</h2></div>
     <div class="wrapper">
-        <ul class="nav nav-pills nav-fill flex-column w-100" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <li class="nav-item">
-              <a class="nav-link active" role="tablist" href="#">Dashboard</a>
+        <ul class="list-group">
+            <li class="list-group-item active" aria-current="true"><a>Dashboard</a></li>
+            <li class="list-group-item"><a>Wellness Activity</a></li>
+            <li class="list-group-item"><a>Survey</a></li>
+            <li class="list-group-item"><a>Forums</a></li>
+            <li class="list-group-item"><a>Messages</a></li>
+            <li class="list-group-item"><a href ="/userProfilePage/{{ auth()->user()->id }}">Profile Page</a></li>
+            @auth
+            <li class="list-group-item">
+                <a href="" class="p-3">{{ auth()->user()->name }}</a>
             </li>
             <li class="nav-item">
               <a class="nav-link disabled" href="#">Wellness Activity</a>

@@ -23,7 +23,7 @@
               </li>
               @auth
               <li class="list-group-item">
-                <a class="href="#">{{ auth()->user()->name }}</a>
+                <a href="/userProfilePage/{{ auth()->user()->id }}">{{ auth()->user()->name }}</a>
               </li>
 
               <li class="list-group-item">

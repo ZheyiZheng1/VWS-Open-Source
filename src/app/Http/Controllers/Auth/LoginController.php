@@ -89,17 +89,12 @@ class LoginController extends Controller
 
     public function updateProfile(Request $req) {
         //take data that upload from user and update to database.
-        $data = User::find($req->id);
-        $data = User::find($req->id);
-        $data->firstName=$req->firstName;
-        $data->lastName=$req->lastName;
-        $data->phone=$req->phone;
-        $data->email=$req->email;
-        $data->address=$req->address;
-        $data->city=$req->city;
-        $data->zip=$req->zip;
-        $data->country=$req->country;
+        $data = User::find(Auth::user()->id);
+        $data->name=$req->firstName . ' ' . $req->lastName;
+        $data->email=$req->emailAddress;
         $data->save();
-        return redirect('userProfilePage');
+        return view('userProfilePage', [
+            'data' => $data
+        ]);
     }
 }
