@@ -2,7 +2,7 @@
 <section class="left-panel">
     <div class="vws-title"><h2>VWS</h2></div>
     <div class="wrapper">
-        <ul class="list-group">
+        <ul class="list-group" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             <li class="list-group-item active" aria-current="true"><a>Dashboard</a></li>
             <li class="list-group-item"><a>Wellness Activity</a></li>
             <li class="list-group-item"><a>Survey</a></li>
@@ -10,25 +10,6 @@
             <li class="list-group-item"><a>Messages</a></li>
             <li class="list-group-item"><a href ="/userProfilePage/{{ auth()->user()->id }}">Profile Page</a></li>
             @auth
-            <li class="list-group-item">
-                <a href="" class="p-3">{{ auth()->user()->name }}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Wellness Activity</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" role="tablist" href="#">Survey</a>
-            </li>
-            <li class="nav-item ">
-                <a class="nav-link disabled" href="#">Forums</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#">Messages</a>
-              </li>
-              @auth
-              <li class="nav-item">
-                <a class="nav-link" href="#">{{ auth()->user()->name }}</a>
-              </li>
 
               <li class="nav-item">
                 <form action="{{ route('logout') }}" method="post" class="form-inline" style="
