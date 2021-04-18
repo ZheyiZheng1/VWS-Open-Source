@@ -1,3 +1,6 @@
+@extends('layouts.researcherlayout')
+@section('title','Welcome to VWS')
+@section('layout')
 <!DOCTYPE html>
 <html lang="en">
 
