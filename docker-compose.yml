@@ -10,7 +10,7 @@ services:
       - app
       - appmysql
     ports:
-      - "80:80"
+      - "8000:80"
     volumes:
       - ./src/:/var/www/
     container_name: apache
