@@ -34,6 +34,30 @@
 						{{$answers[$loop->index][1]->answerValue}}
 					</label>
 				</div>
+                @if(count($answers[$loop->index]) > 2)
+				<div class="form-check">
+					<input class="form-check-input" onclick="becomeReadOnly();"type="radio"  name="answer{{$loop->index}}" id="questionOneAnswer3">
+					<label class="form-check-label" for="questionOneAnswer3">
+						{{$answers[$loop->index][2]->answerValue}}
+					</label>
+				</div>
+                @endif
+                @if(count($answers[$loop->index]) > 3)
+				<div class="form-check">
+					<input class="form-check-input" onclick="becomeReadOnly();"type="radio"  name="answer{{$loop->index}}" id="questionOneAnswer4">
+					<label class="form-check-label" for="questionOneAnswer4">
+						{{$answers[$loop->index][3]->answerValue}}
+					</label>
+				</div>
+                @endif
+                @if(count($answers[$loop->index]) > 4)
+				<div class="form-check">
+					<input class="form-check-input" onclick="becomeReadOnly();"type="radio"  name="answer{{$loop->index}}" id="questionOneAnswer5">
+					<label class="form-check-label" for="questionOneAnswer5">
+						{{$answers[$loop->index][4]->answerValue}}
+					</label>
+				</div>
+                @endif
                 <input type="hidden" value="{{$questions[$loop->index]->id }}" name="questionNumber{{$loop->index}}" />
 
 			</div>

@@ -17,9 +17,6 @@
 
 <body>
     <div class="main">
-        @section('leftsidebar')
-            @include('participantPortal.leftsidebar')
-        @show
 
         <section class="right-panel" >
             <form id='surveyForm' action="/participant-portal/available-surveys/index.html?SurveyList={{ $questions[0]->survey_id }}" method="post">
