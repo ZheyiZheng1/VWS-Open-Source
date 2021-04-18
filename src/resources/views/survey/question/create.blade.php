@@ -16,7 +16,7 @@
             @include('dashboard.leftsidebar')
         @show
         <section class="right-panel">
-            <h2>Good Morning {{auth()->user()->name}},</h2>
+        <h2>Good Morning {{auth()->user()->name}},</h2>
             <form action="/surveys/questions?surveyId={{$survey->id}}" method="POST">
                 <div class="survey-create card mt-4" id="question1">
                     <div class="card-header">
@@ -54,31 +54,7 @@
                                 <fieldset id="choice">
                                     <legend>Choices</legend>
                                     <div id="choice_group">
-                                        <!--<div>
-                                            <div class="form-group">
-                                                <label for="answer1">Choice 1</label>
-                                                <input name="choiceOne" type="text"
-                                                class="form-control" id="answer1" aria-describedby="choicesHelp"
-                                                placeholder="Enter Choice 1" />
-
-                                                @error('choiceOne')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <div class="form-group">
-                                                <label for="answer2">Choice 2</label>
-                                                <input name="choiceTwo" type="text"
-                                                class="form-control" id="answer2"
-                                                aria-describedby="choicesHelp" placeholder="Enter Choice 2" />
-
-                                                @error('choiceTwo')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                        </div>-->
+                                        
                                     </div>
                                     
                                     <button type="button" onclick="add_new_choice()" class="btn btn-dark">Add another choice</button>
@@ -124,22 +100,19 @@
         }
 
         function add_new_choice(){
+                var div = document.createElement("div");
 
                 //label
-                //var b = document.getElementById("choice_group");
-                // create an input field to insert
                 var new_field_b = document.createElement("label");
                 // set input field data type to text
                 new_field_b.setAttribute("for", "choice[]");
                 new_field_b.innerHTML = "Choice";
                 // select last position to insert element before it
-                //var pos = b.childElementCount;
                 // insert element
-                //b.insertBefore(new_field_b, b.childNodes[pos]);
-                document.getElementById("choice_group").appendChild(new_field_b);
+                //document.getElementById("choice_group").appendChild(new_field_b);
+                div.appendChild(new_field_b);
 
                 //choice bar
-                //var a = document.getElementById("choice_group");
                 // create an input field to insert
                 var new_field_a = document.createElement("input");
                 // set input field data type to text
@@ -153,11 +126,31 @@
                 // set placeholder
                 new_field_a.setAttribute("placeholder", "Enter choice");
                 // select last position to insert element before it
-                //var pos = a.childElementCount;
                 // insert element
-                //a.insertBefore(new_field_a, a.childNodes[pos]);
-                document.getElementById("choice_group").appendChild(new_field_a);
+                //document.getElementById("choice_group").appendChild(new_field_a);
+                div.appendChild(new_field_a);
+
+                //remove button
+                var new_field_c = document.createElement("input");
+                // set input field data type to text
+                new_field_c.setAttribute("type", "button");
+                // set input field name 
+                new_field_c.setAttribute("value", "remove");
+                // set aria-describedby
+                new_field_a.setAttribute("aria-describedby", "choicesHelp");
+                // set function
+                new_field_c.setAttribute("onclick", "remove_textbox(this)");
+                // select last position to insert element before it
+                // insert element
+                //document.getElementById("choice_group").appendChild(new_field_c);
+                div.appendChild(new_field_c);
+
+                document.getElementById("choice_group").appendChild(div);
             }
+
+        function remove_textbox(div){
+            document.getElementById("choice_group").removeChild(div.parentNode);
+        }
         </script>
     </script>
 </body>
