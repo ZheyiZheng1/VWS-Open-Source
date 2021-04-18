@@ -35,9 +35,10 @@
 
                             </div>
                             <div class="form-group mb-2 yesno-choice" style="display: block;">
-                                <fieldset>
+                                <fieldset id="choice">
                                     <legend>Choices</legend>
-                                        <div>
+                                    <div id="choice_group">
+                                        <!--<div>
                                             <div class="form-group">
                                                 <label for="answer1">Choice 1</label>
                                                 <input name="choiceOne" type="text"
@@ -47,11 +48,11 @@
                                                 @error('choiceOne')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
-                                                </div>
                                             </div>
+                                        </div>
 
-                                            <div>
-                                                <div class="form-group">
+                                        <div>
+                                            <div class="form-group">
                                                 <label for="answer2">Choice 2</label>
                                                 <input name="choiceTwo" type="text"
                                                 class="form-control" id="answer2"
@@ -61,7 +62,10 @@
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror
                                             </div>
-                                        </div>
+                                        </div>-->
+                                    </div>
+                                    
+                                    <button type="button" onclick="add_new_choice()" class="btn btn-dark">Add another choice</button>
                                 </fieldset>
                             </div>
                             <input class="text-choice" type="input" name="textChoice" style="display: none;" value="">
@@ -100,5 +104,42 @@
             choices.children[1].children[4].setAttribute("style", "display: none;");
             choices.children[1].children[5].setAttribute("style", "display: block;");
         }
+
+        function add_new_choice(){
+
+                //label
+                //var b = document.getElementById("choice_group");
+                // create an input field to insert
+                var new_field_b = document.createElement("label");
+                // set input field data type to text
+                new_field_b.setAttribute("for", "choice[]");
+                new_field_b.innerHTML = "Choice";
+                // select last position to insert element before it
+                //var pos = b.childElementCount;
+                // insert element
+                //b.insertBefore(new_field_b, b.childNodes[pos]);
+                document.getElementById("choice_group").appendChild(new_field_b);
+
+                //choice bar
+                //var a = document.getElementById("choice_group");
+                // create an input field to insert
+                var new_field_a = document.createElement("input");
+                // set input field data type to text
+                new_field_a.setAttribute("type", "text");
+                // set input field name 
+                new_field_a.setAttribute("name", "choice[]");
+                // set class
+                new_field_a.setAttribute("class", "form-control");
+                // set aria-describedby
+                new_field_a.setAttribute("aria-describedby", "choicesHelp");
+                // set placeholder
+                new_field_a.setAttribute("placeholder", "Enter choice");
+                // select last position to insert element before it
+                //var pos = a.childElementCount;
+                // insert element
+                //a.insertBefore(new_field_a, a.childNodes[pos]);
+                document.getElementById("choice_group").appendChild(new_field_a);
+            }
+        </script>
     </script>
 @endsection
