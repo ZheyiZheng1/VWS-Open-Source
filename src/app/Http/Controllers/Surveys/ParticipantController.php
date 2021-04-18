@@ -64,8 +64,11 @@ class ParticipantController extends Controller
                 ]);
             }
         }
-        $SurveyUserListItem = SurveyUserList::find($request->SurveyList);
-        if ($SurveyUserListItem) {
+        $SurveyUserList = SurveyUserList::where(
+            ['survey_id' => $request->SurveyList, 'user_id' => Auth::user()->id
+            ])->get();
+        if ($SurveyUserList) {
+            $SurveyUserListItem = SurveyUserList::find($SurveyUserList->first()->id);
             $SurveyUserListItem['isCompleted'] = true;
             $SurveyUserListItem->save();
         }
