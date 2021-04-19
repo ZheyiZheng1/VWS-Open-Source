@@ -1,22 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/dashboard/index.css" />
-    <link rel="stylesheet" href="/css/dashboard/sidebar.css" />
-    <link rel="stylesheet" href="/css/dashboard/surveyrightbar.css" />
+@extends('layouts.researcherlayout')
+@section('content')
     <title>{{$survey -> SurveyName}}</title>
-</head>
-<body>
-    <div class="main">
-        @section('leftsidebar')
-            @include('dashboard.leftsidebar')
-        @show
-        <section class="right-panel">
-            <h2>Good Morning {{auth()->user()->name}},</h2>
             <div>
                 <a class="btn btn-dark" href="/surveys/questions/create?surveyId={{ $survey->id }}">Add New Question</a>
                 <a class="btn btn-dark" href="/surveys/participants/create?surveyId={{ $survey->id }}">Add a Participant</a>
@@ -75,8 +59,6 @@
                             <div class="mt-2">{{ $surveyUserList->links() }}</div>
                         </div>
                 </div>
-        </section>
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript">
@@ -84,5 +66,4 @@
             $(this).alert('close');
         });
     </script>
-</body>
-</html>
+@endsection
