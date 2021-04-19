@@ -54,9 +54,9 @@
                                 <fieldset id="choice">
                                     <legend>Choices</legend>
                                     <div id="choice_group">
-                                        
+
                                     </div>
-                                    
+
                                     <button type="button" onclick="add_new_choice()" class="btn btn-dark">Add another choice</button>
                                 </fieldset>
                             </div>
@@ -101,15 +101,18 @@
 
         function add_new_choice(){
                 var div = document.createElement("div");
+                div.setAttribute("style", "display: flex;")
 
                 //label
                 var new_field_b = document.createElement("label");
                 // set input field data type to text
                 new_field_b.setAttribute("for", "choice[]");
+                new_field_b.setAttribute("style", "padding: 5px;")
                 new_field_b.innerHTML = "Choice";
                 // select last position to insert element before it
                 // insert element
-                //document.getElementById("choice_group").appendChild(new_field_b);
+                var choiceGroup = document.getElementById("choice_group").appendChild(new_field_b);
+                div.appendChild(choiceGroup);
                 div.appendChild(new_field_b);
 
                 //choice bar
@@ -117,7 +120,7 @@
                 var new_field_a = document.createElement("input");
                 // set input field data type to text
                 new_field_a.setAttribute("type", "text");
-                // set input field name 
+                // set input field name
                 new_field_a.setAttribute("name", "choice[]");
                 // set class
                 new_field_a.setAttribute("class", "form-control");
@@ -131,11 +134,11 @@
                 div.appendChild(new_field_a);
 
                 //remove button
-                var new_field_c = document.createElement("input");
+                var new_field_c = document.createElement("button");
                 // set input field data type to text
-                new_field_c.setAttribute("type", "button");
-                // set input field name 
-                new_field_c.setAttribute("value", "remove");
+                // set input field name
+                new_field_c.innerText = "remove";
+                new_field_c.setAttribute("class", "btn btn-dark");
                 // set aria-describedby
                 new_field_a.setAttribute("aria-describedby", "choicesHelp");
                 // set function
