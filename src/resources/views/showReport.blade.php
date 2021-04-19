@@ -39,7 +39,8 @@
                     </tbody>
                 </table>
                 <!--a button to download the CSV file-->
-                <a class="btn btn-success" href="">Download as CSV</a>
+                @csrf
+                <a class="btn btn-success" href="/export/{{ $survey->id }}">Download as CSV</a>
             </div>
         </section>
     </div>
