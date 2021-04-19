@@ -213,4 +213,19 @@ class SurveyController extends Controller
             return 'superadmin';
         }
     }
+
+    public function showReport(Survey $survey){
+        $surveyID = $survey->id;
+        //find all participant that related to this survey
+        $surveyUserList= DB::table('users')
+                ->whereExists(function ($query) use($surveyID){
+                    $query->from('survey_user_lists')
+                        ->whereColumn('survey_user_lists.user_id','users.id')
+                        ->where('isCompleted',1)
+                        ->where('survey_id',$surveyID);
+                })->paginate(5);
+        
+        //dd($surveyUserList);
+        return view('showReport',compact('survey', 'surveyUserList'));
+    }
 }
