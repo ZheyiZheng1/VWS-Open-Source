@@ -22,8 +22,7 @@ class QuestionController extends Controller
                 'questionType'=>'required',
                 'likertScaleAnswer'=>'required_if:questionType,range',
                 'textChoice'=>'required_if:questionType,text',
-                'choiceOne'=>'required_if:questionType,radio',
-                'choiceTwo'=>'required_if:questionType,radio'
+                'choice'=>'required_if:questionType,radio',
         ]);
         $type= $request->questionType;
         $singleAnswer = $request->likertScaleAnswer;
@@ -33,7 +32,14 @@ class QuestionController extends Controller
         ]);
         if($type === 'radio')
         {
-            $question->answers()->createMany([['answerValue' => $request->choiceOne], ['answerValue' => $request->choiceTwo]]);
+            $answers = [
+                ['answerValue' => $request->choice[0]],
+                ['answerValue' => $request->choice[1]]
+            ];
+            if(count($request->choice) >= 3) array_push($answers, ['answerValue' => $request->choice[2]]);
+            if(count($request->choice) >= 4) array_push($answers, ['answerValue' => $request->choice[3]]);
+            if(count($request->choice) >= 5) array_push($answers, ['answerValue' => $request->choice[4]]);
+            $question->answers()->createMany($answers);
         }
         if($type === 'range')
         {

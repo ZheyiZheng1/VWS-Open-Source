@@ -1,6 +1,13 @@
 @extends('layouts.researcherlayout')
 @section('content')
     <title>{{$survey -> title}}</title>
+<body>
+    <div class="main">
+        @section('leftsidebar')
+            @include('dashboard.leftsidebar')
+        @show
+        <section class="right-panel">
+        <h2>Good Morning {{auth()->user()->name}},</h2>
             <form action="/surveys/questions?surveyId={{$survey->id}}" method="POST">
                 <div class="survey-create card mt-4" id="question1">
                     <div class="card-header">
@@ -35,33 +42,13 @@
 
                             </div>
                             <div class="form-group mb-2 yesno-choice" style="display: block;">
-                                <fieldset>
+                                <fieldset id="choice">
                                     <legend>Choices</legend>
-                                        <div>
-                                            <div class="form-group">
-                                                <label for="answer1">Choice 1</label>
-                                                <input name="choiceOne" type="text"
-                                                class="form-control" id="answer1" aria-describedby="choicesHelp"
-                                                placeholder="Enter Choice 1" />
+                                    <div id="choice_group">
 
-                                                @error('choiceOne')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                                </div>
-                                            </div>
+                                    </div>
 
-                                            <div>
-                                                <div class="form-group">
-                                                <label for="answer2">Choice 2</label>
-                                                <input name="choiceTwo" type="text"
-                                                class="form-control" id="answer2"
-                                                aria-describedby="choicesHelp" placeholder="Enter Choice 2" />
-
-                                                @error('choiceTwo')
-                                                    <small class="text-danger">{{ $message }}</small>
-                                                @enderror
-                                            </div>
-                                        </div>
+                                    <button type="button" onclick="add_new_choice()" class="btn btn-dark">Add another choice</button>
                                 </fieldset>
                             </div>
                             <input class="text-choice" type="input" name="textChoice" style="display: none;" value="">
@@ -100,5 +87,62 @@
             choices.children[1].children[4].setAttribute("style", "display: none;");
             choices.children[1].children[5].setAttribute("style", "display: block;");
         }
+
+        function add_new_choice(){
+                var div = document.createElement("div");
+                div.setAttribute("style", "display: flex;")
+
+                //label
+                var new_field_b = document.createElement("label");
+                // set input field data type to text
+                new_field_b.setAttribute("for", "choice[]");
+                new_field_b.setAttribute("style", "padding: 5px;")
+                new_field_b.innerHTML = "Choice";
+                // select last position to insert element before it
+                // insert element
+                var choiceGroup = document.getElementById("choice_group").appendChild(new_field_b);
+                div.appendChild(choiceGroup);
+                div.appendChild(new_field_b);
+
+                //choice bar
+                // create an input field to insert
+                var new_field_a = document.createElement("input");
+                // set input field data type to text
+                new_field_a.setAttribute("type", "text");
+                // set input field name
+                new_field_a.setAttribute("name", "choice[]");
+                // set class
+                new_field_a.setAttribute("class", "form-control");
+                // set aria-describedby
+                new_field_a.setAttribute("aria-describedby", "choicesHelp");
+                // set placeholder
+                new_field_a.setAttribute("placeholder", "Enter choice");
+                // select last position to insert element before it
+                // insert element
+                //document.getElementById("choice_group").appendChild(new_field_a);
+                div.appendChild(new_field_a);
+
+                //remove button
+                var new_field_c = document.createElement("button");
+                // set input field data type to text
+                // set input field name
+                new_field_c.innerText = "remove";
+                new_field_c.setAttribute("class", "btn btn-dark");
+                // set aria-describedby
+                new_field_a.setAttribute("aria-describedby", "choicesHelp");
+                // set function
+                new_field_c.setAttribute("onclick", "remove_textbox(this)");
+                // select last position to insert element before it
+                // insert element
+                //document.getElementById("choice_group").appendChild(new_field_c);
+                div.appendChild(new_field_c);
+
+                document.getElementById("choice_group").appendChild(div);
+            }
+
+        function remove_textbox(div){
+            document.getElementById("choice_group").removeChild(div.parentNode);
+        }
+        </script>
     </script>
 @endsection
